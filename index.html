@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<title>نمو | Numoo — الكشف المبكر للتوحد</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#0ABFBC;--teal-d:#089b98;--teal-l:#e0fafa;--teal-xl:#f0fdfd;
+  --navy:#0D2137;--navy2:#0a3d5c;
+  --soft:#F4FAFA;--white:#fff;--text:#1a2e3b;--muted:#4a6a7a;
+  --green:#1e9e55;--yellow:#d48a00;--red:#c0392b;
+  --border:#d5e8e8;--r:20px;--rsm:14px;
+  --shadow:0 3px 18px rgba(0,0,0,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-height:100vh;overflow-x:hidden}
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+@media(max-width:380px){.app-title{font-size:40px}.page-body{padding:14px 12px 64px}.stat-row{flex-direction:column}.age-group-grid{grid-template-columns:1fr}}
+
+/* ── LANG SWITCHER ── */
+.lang-bar{position:fixed;top:14px;left:14px;z-index:100;display:flex;gap:6px}
+.lang-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:800;font-family:'Tajawal',sans-serif;cursor:pointer;border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;transition:all .2s;backdrop-filter:blur(6px)}
+.lang-btn.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.lang-btn:hover{background:rgba(255,255,255,.2)}
+
+/* ── PRIVACY GATE ── */
+#privacyGate{background:var(--soft);color:var(--text);align-items:center;justify-content:center;padding:24px}
+.privacy-box{background:#fff;border-radius:var(--r);padding:28px 22px;max-width:400px;width:100%;box-shadow:var(--shadow)}
+.privacy-box h2{font-size:22px;font-weight:800;color:var(--navy);margin-bottom:14px}
+.privacy-box p{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:14px}
+.privacy-box ul{font-size:13px;color:var(--muted);margin:0 0 16px 0;padding-right:20px;line-height:2.1}
+.check-row{display:flex;align-items:flex-start;gap:12px;background:var(--teal-xl);border-radius:var(--rsm);padding:14px;margin-bottom:16px}
+.check-row input[type=checkbox]{width:20px;height:20px;flex-shrink:0;accent-color:var(--teal);cursor:pointer;margin-top:2px}
+.check-row label{font-size:14px;color:var(--text);line-height:1.7;cursor:pointer}
+
+/* ── SPLASH ── */
+#splash{background:linear-gradient(155deg,#0a1628 0%,#0D2137 30%,#0a3d5c 65%,#063048 100%);align-items:center;justify-content:center;position:relative;overflow:hidden}
+#splash::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(10,191,188,.15) 0%,transparent 70%);top:-160px;right:-160px;animation:breathe 5s ease-in-out infinite}#splash::after{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(10,191,188,.07) 0%,transparent 70%);bottom:-100px;left:-100px;animation:breathe 7s ease-in-out infinite reverse}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.splash-inner{text-align:center;z-index:1;padding:32px 24px;max-width:420px;animation:fadeUp .9s ease both;width:100%}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.logo-box{width:96px;height:96px;background:linear-gradient(135deg,var(--teal),var(--teal-d));border-radius:26px;margin:0 auto 22px;display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:0 18px 55px rgba(10,191,188,.45)}
+.app-title{font-size:52px;font-weight:900;background:linear-gradient(135deg,#fff,var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;margin-bottom:4px}
+.app-en{font-size:12px;color:rgba(255,255,255,.35);letter-spacing:4px;margin-bottom:16px}
+.app-tagline{font-size:15px;color:rgba(255,255,255,.68);line-height:1.9;margin-bottom:10px}
+.mchat-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(10,191,188,.15);border:1px solid rgba(10,191,188,.3);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--teal);font-weight:700;margin-bottom:8px}
+/* NEW: easy login badge */
+.easy-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(247,168,74,.15);border:1px solid rgba(247,168,74,.35);border-radius:20px;padding:5px 12px;font-size:11px;color:#f7a84a;font-weight:700;margin-bottom:28px}
+.splash-time{font-size:12px;color:rgba(255,255,255,.4);margin-top:14px}
+
+/* ── BUTTONS ── */
+.btn{display:inline-block;border:none;font-family:'Tajawal',sans-serif;cursor:pointer;transition:all .3s;font-weight:700}
+.btn-main{background:linear-gradient(135deg,var(--teal),var(--teal-d));color:#fff;padding:17px 52px;border-radius:50px;font-size:17px;box-shadow:0 10px 38px rgba(10,191,188,.42)}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(10,191,188,.52)}
+.btn-outline{background:transparent;color:var(--teal);border:2px solid rgba(10,191,188,.5);padding:13px 40px;border-radius:50px;font-size:15px;margin-top:12px}
+.btn-full{width:100%;border:none;padding:17px;border-radius:var(--rsm);font-size:16px;font-family:'Tajawal',sans-serif;cursor:pointer;font-weight:700;margin-top:10px}
+.btn-teal{background:linear-gradient(135deg,var(--teal),var(--teal-d));color:#fff}
+.btn-dark{background:var(--navy);color:#fff}
+.btn-ghost{background:#fff;color:var(--navy);border:2px solid var(--border)}
+
+/* ── PAGE STRUCTURE ── */
+.page-header{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:48px 24px 24px;color:#fff;flex-shrink:0}
+.back-btn{background:none;border:none;color:rgba(255,255,255,.6);font-size:15px;font-family:'Tajawal',sans-serif;cursor:pointer;margin-bottom:16px;display:flex;align-items:center;gap:6px;padding:8px 0}
+.back-btn::before{content:'→';font-size:18px}
+.page-header h2{font-size:24px;font-weight:800;margin-bottom:6px}
+.page-header p{font-size:14px;color:rgba(255,255,255,.62);line-height:1.8}
+.page-body{background:var(--soft);padding:22px 20px 64px;flex:1;color:var(--text)}
+.card{background:#fff;border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h3{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card p{font-size:14px;color:var(--muted);line-height:1.85}
+
+/* ── INFO ── */
+.stat-row{display:flex;gap:12px;margin-bottom:14px}
+.stat-box{flex:1;background:#fff;border-radius:16px;padding:16px;text-align:center;box-shadow:var(--shadow)}
+.stat-num{font-size:26px;font-weight:900;color:var(--teal);display:block}
+.stat-lbl{font-size:11px;color:var(--muted);line-height:1.6}
+.source-tag{display:inline-block;background:var(--teal-l);color:var(--teal-d);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:6px}
+
+/* ── AGE SELECT ── */
+.age-group-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.age-card{background:#fff;border-radius:var(--r);padding:18px;box-shadow:var(--shadow);cursor:pointer;border:2.5px solid transparent;transition:all .25s;text-align:center}
+.age-card:hover,.age-card.sel{border-color:var(--teal);background:var(--teal-l)}
+.age-card .age-icon{font-size:32px;margin-bottom:8px;display:block}
+.age-card .age-label{font-size:15px;font-weight:800;color:var(--navy)}
+.age-card .age-sub{font-size:12px;color:var(--muted);margin-top:3px}
+
+/* ── ASSESSMENT ── */
+.prog-wrap{background:rgba(255,255,255,.2);height:5px;border-radius:10px;margin-top:14px;overflow:hidden}
+.prog-fill{height:100%;background:var(--teal);border-radius:10px;transition:width .4s ease}
+.step-lbl{font-size:12px;color:rgba(255,255,255,.55);margin-top:7px}
+.q-card{background:#fff;border-radius:22px;padding:22px;box-shadow:0 6px 28px rgba(0,0,0,.08);margin-bottom:16px;animation:slideIn .35s ease both}
+@keyframes slideIn{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+.q-icon{font-size:36px;margin-bottom:10px;display:block}
+.q-title{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:5px;line-height:1.6}
+.q-sub{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.7}
+.q-source{display:inline-flex;align-items:center;gap:4px;background:var(--teal-l);color:var(--teal-d);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:12px}
+.txt-input{width:100%;padding:15px;border:2px solid var(--border);border-radius:var(--rsm);font-size:17px;font-family:'Tajawal',sans-serif;color:var(--text);background:var(--soft);outline:none;text-align:right;transition:border-color .2s}
+.txt-input:focus{border-color:var(--teal)}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{background:var(--soft);border:2.5px solid transparent;border-radius:var(--rsm);padding:13px 16px;font-size:15px;font-weight:600;font-family:'Tajawal',sans-serif;cursor:pointer;text-align:right;transition:all .22s;color:var(--text);display:flex;align-items:center;gap:10px}
+.opt:hover,.opt.sel{border-color:var(--teal);background:var(--teal-l);color:var(--navy)}
+.opt::before{content:'';width:12px;height:12px;border-radius:3px;background:var(--border);flex-shrink:0;transition:background .2s}
+.opt.sel::before{background:var(--teal)}
+.nav-row{display:flex;gap:10px;margin-top:8px}
+.btn-next{flex:1;background:linear-gradient(135deg,var(--teal),var(--teal-d));color:#fff;border:none;padding:15px;border-radius:var(--rsm);font-size:16px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;transition:all .3s}
+.btn-back-sm{background:#fff;color:var(--muted);border:2px solid var(--border);padding:15px 18px;border-radius:var(--rsm);font-family:'Tajawal',sans-serif;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn-back-sm::before{content:'→'}
+
+/* ── LOADING ── */
+#loading{background:linear-gradient(150deg,var(--navy),var(--navy2));align-items:center;justify-content:center}
+.load-inner{text-align:center;padding:24px}
+.brain{font-size:70px;display:block;margin:0 auto 22px;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.load-steps{display:flex;flex-direction:column;gap:10px;width:280px;margin:32px auto 0}
+.ls{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);padding:11px 14px;border-radius:12px;opacity:0;transition:opacity .5s;font-size:14px;color:rgba(255,255,255,.8)}
+.ls.on{opacity:1}
+.ls-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0}
+
+/* ── RESULTS ── */
+#results{background:var(--soft)}
+.res-top{padding:36px 22px 16px;text-align:center;background:var(--soft)}
+.res-icon{width:88px;height:88px;border-radius:24px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:42px}
+.res-icon.green{background:linear-gradient(135deg,#1e9e55,#27ae60);box-shadow:0 12px 35px rgba(30,158,85,.35)}
+.res-icon.yellow{background:linear-gradient(135deg,#c47800,#d48a00);box-shadow:0 12px 35px rgba(212,138,0,.35)}
+.res-icon.red{background:linear-gradient(135deg,#a52b1c,#c0392b);box-shadow:0 12px 35px rgba(192,57,43,.35)}
+.res-title{font-size:24px;font-weight:800;color:var(--navy);margin-bottom:7px}
+.res-sub{font-size:14px;color:var(--muted);line-height:1.85;max-width:310px;margin:0 auto 12px}
+.level-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 18px;border-radius:30px;font-size:13px;font-weight:800}
+.level-badge.low{background:rgba(30,158,85,.12);color:var(--green)}
+.level-badge.medium{background:rgba(212,138,0,.14);color:var(--yellow)}
+.level-badge.high{background:rgba(192,57,43,.12);color:var(--red)}
+.ind-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ind-lbl{font-size:13px;color:var(--muted);width:110px;flex-shrink:0}
+.ind-track{flex:1;background:var(--soft);border-radius:8px;height:10px;overflow:hidden}
+.ind-fill{height:100%;border-radius:8px;transition:width 1.1s ease}
+.ind-fill.low{background:var(--green)}
+.ind-fill.mid{background:var(--yellow)}
+.ind-fill.high{background:var(--red)}
+.ind-val{font-size:12px;font-weight:700;width:44px;text-align:left}
+.q-detail{background:var(--soft);border-radius:var(--rsm);padding:13px;margin-bottom:9px;border-right:4px solid transparent}
+.q-detail.concern{border-color:var(--red)}
+.q-detail.ok{border-color:var(--green)}
+.q-detail h4{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.q-detail p{font-size:12px;color:var(--muted);line-height:1.7}
+.ai-report-box{background:#fff;border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--shadow);border-right:4px solid var(--teal)}
+.disclaimer{background:#fff8ee;border:1.5px solid #ffe0a0;border-radius:var(--rsm);padding:14px;margin-bottom:16px;font-size:13px;color:#6b4f00;line-height:1.75;display:flex;gap:10px}
+
+/* ── CAMERA SCREEN ── */
+#camera{background:var(--soft)}
+.camera-feed-wrap{position:relative;background:#000;border-radius:var(--r);overflow:hidden;margin-bottom:16px;aspect-ratio:4/3}
+#cameraFeed{width:100%;height:100%;object-fit:cover;display:block}
+.camera-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(0,0,0,.5);color:#fff}
+.ai-feedback-box{background:#fff;border-radius:var(--r);padding:18px;margin-bottom:14px;box-shadow:var(--shadow);min-height:80px}
+.ai-feedback-box h4{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.ai-feedback-box p{font-size:14px;color:var(--text);line-height:1.8}
+.task-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.task-card{background:#fff;border-radius:var(--rsm);padding:14px;box-shadow:var(--shadow);cursor:pointer;border:2px solid transparent;transition:all .2s;text-align:center}
+.task-card:hover,.task-card.active{border-color:var(--teal);background:var(--teal-l)}
+.task-card .t-icon{font-size:28px;margin-bottom:6px;display:block}
+.task-card .t-name{font-size:13px;font-weight:800;color:var(--navy)}
+.task-card .t-dur{font-size:11px;color:var(--muted);margin-top:2px}
+.rec-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(10,191,188,.12);border:1px solid rgba(10,191,188,.3);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--teal-d);font-weight:700;margin-bottom:10px}
+
+/* ── CENTERS ── */
+#centers{background:var(--soft)}
+.pada-card{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:18px;margin-bottom:12px;display:flex;align-items:center;gap:14px;color:#fff}
+.pada-card h3{font-size:15px;font-weight:800;margin-bottom:3px}
+.pada-card p{font-size:12px;color:rgba(255,255,255,.65);margin-bottom:9px;line-height:1.7}
+.pada-num{background:var(--teal);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;display:inline-block;border:none;font-family:'Tajawal',sans-serif;text-decoration:none}
+.center-card{background:#fff;border-radius:var(--r);padding:17px;margin-bottom:11px;box-shadow:var(--shadow);display:flex;gap:13px}
+.ctr-icon{width:48px;height:48px;background:var(--teal-l);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.ctr-name{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:3px}
+.ctr-loc{font-size:12px;color:var(--muted);margin-bottom:8px}
+.ctr-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
+.badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--teal-l);color:var(--teal-d)}
+.badge.govt{background:#e8f4fd;color:#1a6fa8}
+.call-link{background:var(--teal);color:#fff;padding:7px 16px;border-radius:20px;font-size:13px;font-weight:700;font-family:'Tajawal',sans-serif;text-decoration:none;display:inline-block}
+
+/* ── PROGRESS ── */
+#progress{background:var(--soft)}
+.prog-summary{background:linear-gradient(135deg,var(--teal),var(--teal-d));border-radius:var(--r);padding:22px;margin-bottom:14px;color:#fff}
+.prog-big{font-size:38px;font-weight:900;margin-bottom:6px}
+.prog-bar-w{background:rgba(255,255,255,.22);border-radius:8px;height:8px;overflow:hidden}
+.prog-bar-f{height:100%;background:#fff;border-radius:8px;width:72%}
+.timeline{position:relative;padding-right:22px}
+.timeline::before{content:'';position:absolute;top:8px;right:9px;width:3px;height:calc(100% - 12px);background:var(--border);border-radius:10px}
+.tl-item{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.tl-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;z-index:1;margin-top:3px;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.tl-dot.g{background:var(--green)}.tl-dot.y{background:var(--yellow)}
+.tl-content{background:var(--soft);border-radius:var(--rsm);padding:13px;flex:1}
+.tl-content h4{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.tl-content p{font-size:13px;color:var(--text);line-height:1.75}
+.tl-note{display:inline-block;font-size:11px;color:var(--teal-d);background:var(--teal-l);padding:4px 10px;border-radius:20px;font-weight:700;margin-top:6px}
+
+/* ── COPYRIGHT ── */
+.copyright{background:var(--navy);color:rgba(255,255,255,.35);text-align:center;padding:16px;font-size:12px;line-height:1.7}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--navy);color:#fff;padding:13px 22px;border-radius:30px;font-size:14px;font-weight:600;transition:transform .4s ease;z-index:999;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+
+/* ── CHATBOT ── */
+#chatbot{background:var(--soft)}
+.chat-messages{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;min-height:200px}
+.chat-bubble{max-width:85%;padding:13px 16px;border-radius:18px;font-size:14px;line-height:1.75;animation:fadeUp .3s ease}
+.chat-bubble.bot{background:#fff;color:var(--text);border-bottom-right-radius:4px;box-shadow:var(--shadow);align-self:flex-start}
+.chat-bubble.user{background:var(--teal);color:#fff;border-bottom-left-radius:4px;align-self:flex-end}
+.chat-bubble.typing{background:#fff;padding:14px 18px}
+.typing-dots span{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted);margin:0 2px;animation:bounce .9s infinite}
+.typing-dots span:nth-child(2){animation-delay:.2s}.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.chat-input-row{display:flex;gap:8px;position:sticky;bottom:0;background:var(--soft);padding:8px 0}
+.chat-input{flex:1;padding:13px 16px;border:2px solid var(--border);border-radius:30px;font-size:15px;font-family:'Tajawal',sans-serif;color:var(--text);background:#fff;outline:none;text-align:right}
+.chat-input:focus{border-color:var(--teal)}
+.chat-send{width:46px;height:46px;border-radius:50%;background:var(--teal);border:none;color:#fff;font-size:20px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.quick-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:7px 14px;font-size:12px;font-family:'Tajawal',sans-serif;cursor:pointer;color:var(--text);transition:all .2s;font-weight:600}
+.chip:hover{border-color:var(--teal);background:var(--teal-l);color:var(--teal-d)}
+
+/* ── TEACHER MODE ── */
+.mode-toggle{display:flex;background:#fff;border-radius:30px;padding:4px;margin-bottom:20px;box-shadow:var(--shadow)}
+.mode-btn{flex:1;padding:10px;border-radius:26px;border:none;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .25s;color:var(--muted);background:transparent}
+.mode-btn.active{background:var(--teal);color:#fff;box-shadow:0 4px 14px rgba(10,191,188,.35)}
+.teacher-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(247,168,74,.15);border:1px solid rgba(247,168,74,.4);border-radius:20px;padding:5px 12px;font-size:11px;color:#e0921a;font-weight:800;margin-bottom:12px}
+
+/* ── ANXIETY INDICATOR ── */
+.anxiety-scale{display:flex;gap:8px;margin:14px 0;justify-content:center;flex-wrap:wrap}
+.anxiety-opt{width:44px;height:44px;border-radius:50%;border:2.5px solid var(--border);background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-weight:700}
+.anxiety-opt:hover,.anxiety-opt.sel{border-color:var(--teal);background:var(--teal-l);transform:scale(1.15)}
+.anxiety-result{background:linear-gradient(135deg,var(--teal-xl),#fff);border:1.5px solid var(--teal-l);border-radius:14px;padding:14px;margin-top:14px;font-size:13px;color:var(--text);line-height:1.8;display:none}
+
+/* ── HEATMAP ── */
+.heatmap-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.hm-cell{border-radius:14px;padding:14px 12px;text-align:center;transition:all .3s}
+.hm-cell.ok{background:#e8fff0;border:2px solid #a8e6be}
+.hm-cell.warn{background:#fff8e0;border:2px solid #f5d57a}
+.hm-cell.alert{background:#fff0ee;border:2px solid #f5b8b1}
+.hm-icon{font-size:24px;margin-bottom:5px;display:block}
+.hm-label{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:3px}
+.hm-val{font-size:11px;color:var(--muted)}
+
+/* ── WEEKLY GUIDE ── */
+.week-activity{background:#fff;border-radius:var(--r);padding:18px;margin-bottom:12px;box-shadow:var(--shadow);border-right:4px solid var(--teal)}
+.week-day{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.week-day:last-child{border-bottom:none}
+.day-circle{width:32px;height:32px;border-radius:50%;background:var(--teal-l);color:var(--teal-d);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.day-done{background:var(--teal);color:#fff}
+.day-txt{flex:1;font-size:13px;color:var(--text);line-height:1.6}
+.day-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .2s}
+.day-check.done{background:var(--green);border-color:var(--green);color:#fff}
+
+/* ── PROGRESS REAL ── */
+.prog-entry{background:#fff;border-radius:var(--rsm);padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.prog-entry textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px;font-family:'Tajawal',sans-serif;font-size:14px;color:var(--text);resize:none;outline:none;margin-top:8px}
+.prog-entry textarea:focus{border-color:var(--teal)}
+.skill-slider{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:var(--border);outline:none;margin:10px 0}
+.skill-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--teal);cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- ARIA LIVE -->
+<div aria-live="polite" class="sr-only" id="live"></div>
+
+<!-- LANG SWITCHER -->
+<div class="lang-bar">
+  <button class="lang-btn active" id="btnAR" onclick="setLang('ar')">عر</button>
+  <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- ═══════════════════════════════
+     PRIVACY GATE
+═══════════════════════════════ -->
+<div id="privacyGate" class="screen active">
+  <div class="privacy-box">
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="width:70px;height:70px;background:linear-gradient(135deg,var(--teal),var(--teal-d));border-radius:20px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:32px">🌱</div>
+      <div style="font-size:30px;font-weight:900;color:var(--navy)">نمو | Numoo</div>
+    </div>
+    <h2 id="pgTitle">قبل البدء — إقرار الخصوصية</h2>
+    <p id="pgDesc">تطبيق نمو أداة للفحص المبكر مبنية على معيار M-CHAT-R/F المعتمد طبياً. يُرجى الاطلاع على ما يلي:</p>
+    <ul id="pgList">
+      <li>المعلومات تُعالَج محلياً على جهازك</li>
+      <li>لا يُخزَّن أي بيانات شخصية على خوادمنا</li>
+      <li>تحليل Claude AI يتم عبر Anthropic API بدون تخزين</li>
+      <li>النتائج توجيهية وليست تشخيصاً طبياً رسمياً</li>
+    </ul>
+    <div class="check-row">
+      <input type="checkbox" id="consent" onchange="checkConsent()">
+      <label for="consent" id="pgConsent">أقر بأنني اطلعت على سياسة الخصوصية وأوافق على الشروط، وأفهم أن نمو أداة للفحص المبكر وليس تشخيصاً طبياً.</label>
+    </div>
+    <button class="btn btn-main" id="consentBtn" style="width:100%;opacity:.4;pointer-events:none" onclick="acceptConsent()" id="pgBtn">ابدأ التقييم →</button>
+    <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:14px" id="pgTime">مدة التقييم: 3-5 دقائق | للأطفال من 16 شهراً حتى 17 سنة</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     SPLASH
+═══════════════════════════════ -->
+<div id="splash" class="screen">
+  <div class="splash-inner">
+    <div class="logo-box">🌱</div>
+    <div class="app-title">نمو</div>
+    <div class="app-en">NUMOO APP</div>
+    <div class="app-tagline" id="splashTag">الكشف المبكر لمؤشرات اضطراب طيف التوحد<br>وتحويل القلق إلى خطوات واضحة</div>
+    <div class="mchat-badge" id="splashBadge1">✓ مبني على M-CHAT-R/F — المعيار العالمي المعتمد</div><br>
+    <div class="easy-badge" id="splashBadge2">🔓 لا يحتاج تسجيل — ابدأ فوراً</div>
+    <div class="teacher-badge" id="teacherBadge" style="display:none">🏫 وضع المعلم — تقييم الطلاب</div>
+    <br>
+    <button class="btn btn-main" onclick="showScreen('info')" id="splashBtn">ابدأ التقييم</button>
+    <br>
+    <button class="btn btn-outline" onclick="showScreen('centers')" id="splashBtn2">🏥 مراكز متخصصة في الكويت</button>
+    <br>
+    <button class="btn btn-outline" onclick="showScreen('camera')" style="margin-top:8px;border-color:rgba(247,168,74,.5);color:#f7a84a" id="splashBtn3">🎥 تمارين ذكية بالكاميرا</button>
+    <br>
+    <button class="btn btn-outline" onclick="showScreen('chatbot')" style="margin-top:8px;border-color:rgba(100,210,210,.5);color:var(--teal)" id="splashBtnChat">💬 اسأل نمو — المساعد الذكي</button>
+    <br>
+    <div class="mode-toggle" style="max-width:280px;margin:16px auto 0">
+      <button class="mode-btn active" id="modeParent" onclick="setMode('parent')">👪 وضع الأهل</button>
+      <button class="mode-btn" id="modeTeacher" onclick="setMode('teacher')">🏫 وضع المعلم</button>
+    </div>
+    <div class="splash-time" id="splashTime">3-5 دقائق • مجاني • بدون تسجيل</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     INFO
+═══════════════════════════════ -->
+<div id="info" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="showScreen('splash')"><span id="backTxt">رجوع</span></button>
+    <h2 id="infoH">لماذا الفحص المبكر؟</h2>
+    <p id="infoP">أرقام موثّقة من أبحاث محكّمة منشورة في مجلات علمية عالمية</p>
+  </div>
+  <div class="page-body">
+    <div class="stat-row">
+      <div class="stat-box"><span class="stat-num">98</span><span class="stat-lbl" id="s1">لكل 10,000 طفل في الكويت</span><span class="source-tag">Middle East Health, 2024</span></div>
+      <div class="stat-box"><span class="stat-num">85%</span><span class="stat-lbl" id="s2">حساسية M-CHAT-R/F</span><span class="source-tag">Robins et al., Pediatrics 2014</span></div>
+    </div>
+    <div class="card">
+      <h3>🔬 <span id="whatMChat">ما هي M-CHAT-R/F؟</span></h3>
+      <p id="mChatDesc">قائمة التحقق المعدَّلة للتوحد في مرحلة الأطفال الصغار هي الأداة الأكثر استخداماً عالمياً للفحص المبكر للتوحد. صمّمتها الدكتورة Diana Robins بجامعة Georgia State ووُثّقت في دراسة ضمت 16,071 طفلاً في مجلة Pediatrics (PMID: 24366990). تُوصي بها الأكاديمية الأمريكية لطب الأطفال عند 18 و24 شهراً.</p>
+    </div>
+    <div class="card">
+      <h3>⚡ <span id="whyEarly">لماذا يهم التدخل المبكر؟</span></h3>
+      <p id="earlyDesc">التشخيص قبل سن الثالثة يحسّن نتائج الطفل في التواصل والسلوك بشكل جذري. في دراسة Robins 2014 تم تشخيص أطفال بسنتين أصغر من المتوسط الوطني الأمريكي بفضل الفحص المبكر.</p>
+      <span class="source-tag" style="margin-top:8px;display:inline-block">Zwaigenbaum et al., J Autism Dev Disord, 2015</span>
+    </div>
+    <div class="card">
+      <h3>🤖 <span id="howAI">كيف يعمل الذكاء الاصطناعي؟</span></h3>
+      <p id="aiDesc">بعد الإجابة على الأسئلة، يُرسل نمو البيانات إلى نموذج Claude من Anthropic ليولّد تقريراً شخصياً بالعربية أو الإنجليزية يشرح كل مؤشر ويقترح خطوات مناسبة لهذا الطفل تحديداً.</p>
+    </div>
+    <div class="card" style="background:var(--teal-xl);border:1px solid var(--teal-l)">
+      <h3 style="color:var(--teal-d)">🔓 <span id="noRegH">لا يحتاج تسجيلاً</span></h3>
+      <p id="noRegDesc">نمو مصمم بحيث تبدأ التقييم فوراً بدون إنشاء حساب أو كلمة مرور. هدفنا إزالة كل حاجز يمنع الأهل من الوصول للمعلومات التي يحتاجونها.</p>
+    </div>
+    <div class="disclaimer">
+      <span>⚠️</span>
+      <div id="disclaimerInfo"><strong>تنبيه طبي:</strong> نمو أداة للفحص التوعوي المبكر وليس تشخيصاً طبياً رسمياً. النتائج استرشادية فقط. التشخيص يتطلب فريقاً متخصصاً مؤهلاً.</div>
+    </div>
+    <div class="card" style="border:2px solid var(--teal-l);background:var(--teal-xl)">
+      <h3 style="color:var(--teal-d)">🧠 كم مستوى قلقك على طفلك؟</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px">يساعدنا هذا في تفسير نتائجك بشكل أدق</p>
+      <div class="anxiety-scale" id="anxietyScale">
+        <div class="anxiety-opt" onclick="setAnxiety(1,this)" title="غير قلق">😌</div>
+        <div class="anxiety-opt" onclick="setAnxiety(2,this)" title="قليلاً">🤔</div>
+        <div class="anxiety-opt" onclick="setAnxiety(3,this)" title="متوسط">😟</div>
+        <div class="anxiety-opt" onclick="setAnxiety(4,this)" title="قلق">😰</div>
+        <div class="anxiety-opt" onclick="setAnxiety(5,this)" title="قلق جداً">😱</div>
+      </div>
+      <div class="anxiety-result" id="anxietyResult"></div>
+    </div>
+    <button class="btn btn-main" style="width:100%" onclick="showScreen('ageSelect')" id="startBtn">ابدأ التقييم ←</button>
+  </div>
+  <div class="copyright">© 2025 Numoo App — جميع الحقوق محفوظة | All Rights Reserved</div>
+</div>
+
+<!-- ═══════════════════════════════
+     AGE SELECT
+═══════════════════════════════ -->
+<div id="ageSelect" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="showScreen('info')"><span id="backAge">رجوع</span></button>
+    <h2 id="ageH">اختر الفئة العمرية</h2>
+    <p id="ageP">الأسئلة تختلف حسب العمر — كل مرحلة لها معاييرها العلمية</p>
+  </div>
+  <div class="page-body">
+    <div class="age-group-grid">
+      <div class="age-card" onclick="selectAge('toddler',this)">
+        <span class="age-icon">👶</span>
+        <div class="age-label" id="ag1">16 — 30 شهراً</div>
+        <div class="age-sub" id="ag1s">M-CHAT-R/F الرسمية</div>
+      </div>
+      <div class="age-card" onclick="selectAge('preschool',this)">
+        <span class="age-icon">🧒</span>
+        <div class="age-label" id="ag2">3 — 5 سنوات</div>
+        <div class="age-sub" id="ag2s">ما قبل المدرسة</div>
+      </div>
+      <div class="age-card" onclick="selectAge('school',this)">
+        <span class="age-icon">👦</span>
+        <div class="age-label" id="ag3">6 — 12 سنة</div>
+        <div class="age-sub" id="ag3s">السن المدرسية</div>
+      </div>
+      <div class="age-card" onclick="selectAge('teen',this)">
+        <span class="age-icon">🧑</span>
+        <div class="age-label" id="ag4">13 — 17 سنة</div>
+        <div class="age-sub" id="ag4s">مرحلة المراهقة</div>
+      </div>
+    </div>
+    <div class="card" style="background:var(--teal-xl);border:1px solid var(--teal-l)">
+      <h3 style="color:var(--teal-d)">💡 <span id="whyAge">لماذا يهم العمر؟</span></h3>
+      <p id="whyAgeDesc">كل مرحلة عمرية لها مؤشرات مختلفة ومعايير علمية مخصصة. طفل 18 شهراً يُقيَّم بمعايير M-CHAT-R/F، بينما مراهق يُقيَّم بمقياس AQ للمراهقين.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     ASSESSMENT
+═══════════════════════════════ -->
+<div id="assessment" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="prevQ()"><span id="backQ">رجوع</span></button>
+    <h2 id="qTitle">التقييم</h2>
+    <div class="prog-wrap"><div class="prog-fill" id="progFill"></div></div>
+    <div class="step-lbl" id="stepLbl">1 / 10</div>
+  </div>
+  <div class="page-body" id="qBody" style="padding-bottom:36px"></div>
+</div>
+
+<!-- ═══════════════════════════════
+     LOADING
+═══════════════════════════════ -->
+<div id="loading" class="screen">
+  <div class="load-inner">
+    <span class="brain">🧠</span>
+    <div style="font-size:20px;font-weight:700" id="loadTxt">يُحلّل نمو إجاباتك...</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.5);margin-top:6px" id="loadSub">الذكاء الاصطناعي يراجع المؤشرات</div>
+    <div class="load-steps">
+      <div class="ls" id="ls1"><div class="ls-dot"></div><div id="ls1t">مقارنة بمعيار M-CHAT-R/F المعتمد</div></div>
+      <div class="ls" id="ls2"><div class="ls-dot"></div><div id="ls2t">تقييم التواصل اللغوي والبصري</div></div>
+      <div class="ls" id="ls3"><div class="ls-dot"></div><div id="ls3t">تحليل الأنماط السلوكية</div></div>
+      <div class="ls" id="ls4"><div class="ls-dot"></div><div id="ls4t">إعداد التقرير بواسطة Claude AI</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     RESULTS
+═══════════════════════════════ -->
+<div id="results" class="screen">
+  <div class="res-top" id="resTop"></div>
+  <div class="page-body" id="resBody"></div>
+</div>
+
+<!-- ═══════════════════════════════
+     CAMERA AI SCREEN
+═══════════════════════════════ -->
+<div id="camera" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="stopCamera();showScreen('splash')"><span id="backCam">رجوع</span></button>
+    <h2 id="camH">🎥 تمارين ذكية بالكاميرا</h2>
+    <p id="camP">اختر تمريناً، ثم سجّل الطفل — الذكاء الاصطناعي يحلل ويوجهك</p>
+  </div>
+  <div class="page-body">
+
+    <!-- Task selector -->
+    <div class="rec-badge" id="camBadge">اختر تمريناً أولاً 👇</div>
+    <div class="task-grid" id="taskGrid">
+      <div class="task-card" onclick="selectTask(0,this)">
+        <span class="t-icon">👀</span>
+        <div class="t-name" id="t0">التواصل البصري</div>
+        <div class="t-dur" id="t0d">30 ثانية</div>
+      </div>
+      <div class="task-card" onclick="selectTask(1,this)">
+        <span class="t-icon">👋</span>
+        <div class="t-name" id="t1">الاستجابة للاسم</div>
+        <div class="t-dur" id="t1d">30 ثانية</div>
+      </div>
+      <div class="task-card" onclick="selectTask(2,this)">
+        <span class="t-icon">👆</span>
+        <div class="t-name" id="t2">تمرين الإشارة</div>
+        <div class="t-dur" id="t2d">45 ثانية</div>
+      </div>
+      <div class="task-card" onclick="selectTask(3,this)">
+        <span class="t-icon">🎭</span>
+        <div class="t-name" id="t3">اللعب التخيلي</div>
+        <div class="t-dur" id="t3d">60 ثانية</div>
+      </div>
+    </div>
+
+    <!-- Camera feed -->
+    <div class="camera-feed-wrap" id="cameraWrap">
+      <div class="camera-overlay" id="camOverlay">
+        <div style="font-size:48px">🎥</div>
+        <div style="font-size:16px;font-weight:700" id="camOverlayTxt">اختر تمريناً لتفعيل الكاميرا</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.7);text-align:center;padding:0 20px" id="camOverlaySub">الكاميرا تعمل محلياً على جهازك فقط</div>
+      </div>
+      <video id="cameraFeed" autoplay playsinline muted style="display:none"></video>
+      <canvas id="camCanvas" style="display:none;position:absolute;inset:0;width:100%;height:100%"></canvas>
+    </div>
+
+    <!-- Controls -->
+    <div style="display:flex;gap:10px;margin-bottom:14px" id="camControls">
+      <button class="btn btn-teal btn-full" id="camStartBtn" onclick="startCameraSession()" style="margin-top:0" disabled>▶ ابدأ التسجيل</button>
+      <button class="btn btn-ghost btn-full" id="camStopBtn" onclick="stopCameraSession()" style="margin-top:0;display:none">⏹ إيقاف</button>
+    </div>
+
+    <!-- Timer -->
+    <div id="timerBox" style="display:none;text-align:center;margin-bottom:14px">
+      <div style="font-size:40px;font-weight:900;color:var(--teal)" id="timerCount">0</div>
+      <div style="font-size:13px;color:var(--muted)" id="timerLabel">ثانية</div>
+    </div>
+
+    <!-- AI Feedback -->
+    <div class="ai-feedback-box" id="aiFeedbackBox">
+      <h4 id="aiFeedH">🤖 توجيهات نمو</h4>
+      <p id="aiFeedTxt" style="color:var(--muted)">اختر تمريناً وابدأ التسجيل لتظهر التوجيهات هنا.</p>
+    </div>
+
+    <!-- Parent Instructions -->
+    <div class="card" id="parentInstructions" style="display:none">
+      <h3 id="instrH">📋 تعليمات للأهل</h3>
+      <div id="instrBody"></div>
+    </div>
+
+    <div class="card" style="background:#fff8ee;border:1.5px solid #ffe0a0">
+      <h3 style="color:#6b4f00">⚠️ <span id="camNoteH">ملاحظة مهمة</span></h3>
+      <p style="color:#6b4f00;font-size:13px" id="camNoteP">تحليل الكاميرا أداة مساعدة للتوجيه فقط وليس تشخيصاً. الكاميرا تعمل محلياً ولا تُرسَل مقاطع لأي خادم.</p>
+    </div>
+  </div>
+  <div class="copyright">© 2025 Numoo App — جميع الحقوق محفوظة | All Rights Reserved</div>
+</div>
+
+<!-- ═══════════════════════════════
+     PROGRESS
+═══════════════════════════════ -->
+<div id="progress" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="showScreen('results')"><span id="backProg">رجوع</span></button>
+    <h2 id="progH">متابعة تطور الطفل</h2>
+    <p id="progP">تابع رحلة النمو أسبوعاً بعد أسبوع</p>
+  </div>
+  <div class="page-body" id="progressBody">
+  </div>
+  <div class="copyright">© 2025 Numoo App — جميع الحقوق محفوظة | All Rights Reserved</div>
+</div>
+
+<!-- ═══════════════════════════════
+     CENTERS
+═══════════════════════════════ -->
+<div id="centers" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="showScreen('splash')"><span id="backCent">رجوع</span></button>
+    <h2 id="centH">🏥 مراكز متخصصة في الكويت</h2>
+    <p id="centP">جهات رسمية ومتخصصة لدعم الأهل وتقييم الأطفال</p>
+  </div>
+  <div class="page-body">
+    <div class="pada-card">
+      <div style="font-size:32px;flex-shrink:0">🏛️</div>
+      <div>
+        <h3 id="c0n">الهيئة العامة لشؤون ذوي الإعاقة</h3>
+        <p id="c0p">حولي، شارع بيروت — الجهة الحكومية الرئيسية</p>
+        <a class="pada-num" href="tel:1811123">📞 1811123</a>&nbsp;
+        <a class="pada-num" href="https://wa.me/96599865721" target="_blank">💬 واتساب</a>
+      </div>
+    </div>
+    <div class="center-card">
+      <div class="ctr-icon">🌟</div>
+      <div style="flex:1">
+        <div class="ctr-name" id="c1n">مركز الكويت للتوحد</div>
+        <div class="ctr-loc" id="c1l">📍 مشرف الغربي — منطقة مبارك العبدالله</div>
+        <div class="ctr-badges"><span class="badge govt" id="c1b1">حكومي</span><span class="badge" id="c1b2">أول مركز بالشرق الأوسط 1994</span><span class="badge" id="c1b3">معتمد دولياً</span></div>
+        <a class="call-link" href="tel:+96525309300">📞 25309300</a>
+      </div>
+    </div>
+    <div class="center-card">
+      <div class="ctr-icon">💙</div>
+      <div style="flex:1">
+        <div class="ctr-name" id="c2n">جمعية الكويت للتوحد</div>
+        <div class="ctr-loc" id="c2l">📍 مشرف الغربي — منطقة مبارك العبدالله</div>
+        <div class="ctr-badges"><span class="badge" id="c2b1">دعم الأهالي</span><span class="badge" id="c2b2">إرشاد</span><span class="badge" id="c2b3">تطوعية</span></div>
+        <a class="call-link" href="mailto:ksautism@gmail.com">📧 <span id="c2btn">تواصل</span></a>
+      </div>
+    </div>
+    <div class="center-card">
+      <div class="ctr-icon">🤝</div>
+      <div style="flex:1">
+        <div class="ctr-name">Autism Partnership Kuwait</div>
+        <div class="ctr-loc" id="c3l">📍 الكويت — الفرع الوحيد في الشرق الأوسط</div>
+        <div class="ctr-badges"><span class="badge">ABA</span><span class="badge" id="c3b2">خاص</span><span class="badge" id="c3b3">تأسس 2015</span></div>
+        <a class="call-link" href="https://www.autismpartnership.com.kw" target="_blank">🌐 <span id="c3btn">الموقع</span></a>
+      </div>
+    </div>
+    <div style="background:#fff8ee;border:1.5px solid #ffe0a0;border-radius:var(--rsm);padding:14px;font-size:13px;color:#6b4f00;line-height:1.75" id="centNote">
+      ⚠️ تأكد من مواعيد العمل قبل الزيارة. هذه المعلومات للتوجيه فقط.
+    </div>
+  </div>
+  <div class="copyright">© 2025 Numoo App — جميع الحقوق محفوظة | All Rights Reserved</div>
+</div>
+
+
+<!-- CHATBOT -->
+<div id="chatbot" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="showScreen('splash')"><span>رجوع</span></button>
+    <h2>💬 اسأل نمو</h2>
+    <p>مساعدك الذكي — اسأل عن التوحد والنمو بالعربي</p>
+  </div>
+  <div class="page-body" style="display:flex;flex-direction:column">
+    <div class="quick-chips" id="quickChips">
+      <button class="chip" onclick="sendQuickMsg(this.textContent)">شنو علامات التوحد؟</button>
+      <button class="chip" onclick="sendQuickMsg(this.textContent)">متى أروح للطبيب؟</button>
+      <button class="chip" onclick="sendQuickMsg(this.textContent)">كيف أساعد طفلي بالبيت؟</button>
+      <button class="chip" onclick="sendQuickMsg(this.textContent)">شنو M-CHAT-R/F؟</button>
+      <button class="chip" onclick="sendQuickMsg(this.textContent)">أفضل مراكز الكويت</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-bubble bot">🌱 أهلاً! أنا نمو — مساعدك لكل أسئلتك عن التوحد والنمو. اسأل بالعربي بكل راحة، أنا هنا أساعدك! 💙</div>
+    </div>
+    <div class="chat-input-row">
+      <button class="chat-send" onclick="sendChatMsg()">↑</button>
+      <input class="chat-input" id="chatInput" type="text" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.key==='Enter')sendChatMsg()">
+    </div>
+  </div>
+</div>
+
+<!-- WEEKLY GUIDE -->
+<div id="weeklyGuide" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="showScreen('results')"><span>رجوع</span></button>
+    <h2>📅 دليل الأسبوع</h2>
+    <p>أنشطة يومية مخصصة لطفلك — ٥ دقائق كافية</p>
+  </div>
+  <div class="page-body" id="weeklyBody"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+// ══════════════════════
+// LANGUAGE SYSTEM
+// ══════════════════════
+let lang = 'ar';
+
+const STRINGS = {
+  ar:{
+    pgTitle:'قبل البدء — إقرار الخصوصية',
+    pgDesc:'تطبيق نمو أداة للفحص المبكر مبنية على معيار M-CHAT-R/F المعتمد طبياً.',
+    pgList:['المعلومات تُعالَج محلياً على جهازك','لا يُخزَّن أي بيانات شخصية','تحليل AI يتم عبر Anthropic بدون تخزين','النتائج توجيهية وليست تشخيصاً طبياً'],
+    pgConsent:'أقر بأنني اطلعت على سياسة الخصوصية وأوافق على الشروط، وأفهم أن نمو أداة للفحص المبكر وليس تشخيصاً طبياً.',
+    pgBtn:'ابدأ التقييم →',
+    pgTime:'مدة التقييم: 3-5 دقائق | للأطفال من 16 شهراً حتى 17 سنة',
+    splashTag:'الكشف المبكر لمؤشرات اضطراب طيف التوحد\nوتحويل القلق إلى خطوات واضحة',
+    splashBadge1:'✓ مبني على M-CHAT-R/F — المعيار العالمي المعتمد',
+    splashBadge2:'🔓 لا يحتاج تسجيل — ابدأ فوراً',
+    splashBtn:'ابدأ التقييم',splashBtn2:'🏥 مراكز متخصصة',splashBtn3:'🎥 تمارين ذكية بالكاميرا',
+    splashTime:'3-5 دقائق • مجاني • بدون تسجيل',
+    infoH:'لماذا الفحص المبكر؟',infoP:'أرقام موثّقة من أبحاث محكّمة',
+    s1:'لكل 10,000 طفل في الكويت',s2:'حساسية M-CHAT-R/F',
+    whatMChat:'ما هي M-CHAT-R/F؟',
+    mChatDesc:'قائمة التحقق المعدَّلة للتوحد هي الأداة الأكثر استخداماً عالمياً للفحص المبكر. وُثّقت في دراسة ضمت 16,071 طفلاً (Robins et al., Pediatrics 2014 — PMID: 24366990).',
+    whyEarly:'لماذا يهم التدخل المبكر؟',
+    earlyDesc:'التشخيص قبل سن الثالثة يحسّن نتائج الطفل بشكل جذري. في دراسة Robins 2014 تم تشخيص أطفال بسنتين أصغر من المتوسط الوطني.',
+    howAI:'كيف يعمل الذكاء الاصطناعي؟',
+    aiDesc:'نمو يُرسل بياناتك إلى Claude من Anthropic ليولّد تقريراً شخصياً يشرح كل مؤشر ويقترح خطوات مناسبة.',
+    noRegH:'لا يحتاج تسجيلاً',
+    noRegDesc:'ابدأ فوراً بدون حساب أو كلمة مرور. هدفنا إزالة كل حاجز.',
+    disclaimerInfo:'<strong>تنبيه طبي:</strong> نمو أداة للفحص التوعوي المبكر وليس تشخيصاً طبياً رسمياً. التشخيص يتطلب فريقاً متخصصاً.',
+    startBtn:'ابدأ التقييم ←',
+    backTxt:'رجوع',backAge:'رجوع',backQ:'رجوع',backCam:'رجوع',backProg:'رجوع',backCent:'رجوع',backRes:'العودة للنتيجة',
+    ageH:'اختر الفئة العمرية',ageP:'الأسئلة تختلف حسب العمر — كل مرحلة لها معاييرها العلمية',
+    ag1:'16 — 30 شهراً',ag1s:'M-CHAT-R/F الرسمية',
+    ag2:'3 — 5 سنوات',ag2s:'ما قبل المدرسة',
+    ag3:'6 — 12 سنة',ag3s:'السن المدرسية',
+    ag4:'13 — 17 سنة',ag4s:'مرحلة المراهقة',
+    whyAge:'لماذا يهم العمر؟',
+    whyAgeDesc:'كل مرحلة لها معايير علمية مخصصة. طفل 18 شهراً يُقيَّم بـ M-CHAT-R/F، مراهق بمقياس AQ.',
+    loadTxt:'يُحلّل نمو إجاباتك...',loadSub:'الذكاء الاصطناعي يراجع المؤشرات',
+    ls1t:'مقارنة بمعيار M-CHAT-R/F',ls2t:'تقييم التواصل اللغوي والبصري',
+    ls3t:'تحليل الأنماط السلوكية',ls4t:'إعداد التقرير بواسطة Claude AI',
+    camH:'🎥 تمارين ذكية بالكاميرا',camP:'اختر تمريناً، ثم سجّل الطفل',
+    camBadge:'اختر تمريناً أولاً 👇',
+    t0:'التواصل البصري',t0d:'30 ثانية',t1:'الاستجابة للاسم',t1d:'30 ثانية',
+    t2:'تمرين الإشارة',t2d:'45 ثانية',t3:'اللعب التخيلي',t3d:'60 ثانية',
+    camOverlayTxt:'اختر تمريناً لتفعيل الكاميرا',camOverlaySub:'الكاميرا تعمل محلياً على جهازك فقط',
+    aiFeedH:'🤖 توجيهات نمو',
+    aiFeedTxt:'اختر تمريناً وابدأ التسجيل لتظهر التوجيهات هنا.',
+    camNoteH:'ملاحظة مهمة',
+    camNoteP:'تحليل الكاميرا أداة مساعدة وليس تشخيصاً. الكاميرا تعمل محلياً فقط.',
+    progH:'متابعة تطور الطفل',progP:'تابع رحلة النمو أسبوعاً بعد أسبوع',
+    progSum:'ملخص التقدم',progNote:'تحسّن ملحوظ في التفاعل والاستجابة',
+    progSkills:'المهارات الحالية',sk1:'التواصل البصري',sk1v:'منخفض',sk2:'الاستجابة',sk2v:'متوسط',sk3:'التفاعل',sk3v:'متوسط',
+    progTL:'التسلسل الزمني',
+    w1:'الأسبوع الأول',w1t:'مستوى المتابعة: متوسط',w1n:'بدأنا التركيز على التواصل البصري',
+    w2:'الأسبوع الثاني',w2t:'تحسّن بسيط في الاستجابة',w2n:'استمرار الأنشطة اليومية',
+    w3:'الأسبوع الثالث',w3t:'تحسّن واضح في التفاعل 👏',w3n:'التواصل البصري أصبح أفضل',
+    addUpd:'أضف تحديث هذا الأسبوع',
+    centH:'🏥 مراكز متخصصة في الكويت',centP:'جهات رسمية ومتخصصة لدعم الأهل',
+    c0n:'الهيئة العامة لشؤون ذوي الإعاقة',c0p:'حولي، شارع بيروت — الجهة الحكومية الرئيسية',
+    c1n:'مركز الكويت للتوحد',c1l:'📍 مشرف الغربي — منطقة مبارك العبدالله',
+    c1b1:'حكومي',c1b2:'أول مركز بالشرق الأوسط 1994',c1b3:'معتمد دولياً',
+    c2n:'جمعية الكويت للتوحد',c2l:'📍 مشرف الغربي',
+    c2b1:'دعم الأهالي',c2b2:'إرشاد',c2b3:'تطوعية',c2btn:'تواصل',
+    c3l:'📍 الكويت — الفرع الوحيد في الشرق الأوسط',c3b2:'خاص',c3b3:'تأسس 2015',c3btn:'الموقع',
+    centNote:'⚠️ تأكد من مواعيد العمل قبل الزيارة. هذه المعلومات للتوجيه فقط.',
+    instrH:'📋 تعليمات للأهل',timerLabel:'ثانية'
+  },
+  en:{
+    pgTitle:'Before You Start — Privacy Notice',
+    pgDesc:'Numoo is an early screening tool built on the medically validated M-CHAT-R/F standard.',
+    pgList:['Information is processed locally on your device','No personal data is stored on our servers','Claude AI analysis via Anthropic API without storage','Results are indicative, not an official medical diagnosis'],
+    pgConsent:'I confirm I have read the privacy policy and agree to the terms. I understand Numoo is an early screening tool, not a medical diagnosis.',
+    pgBtn:'Start Assessment →',
+    pgTime:'Duration: 3-5 minutes | For children aged 16 months to 17 years',
+    splashTag:'Early detection of autism spectrum disorder indicators\nturning parental concern into clear steps',
+    splashBadge1:'✓ Built on M-CHAT-R/F — globally validated standard',
+    splashBadge2:'🔓 No registration required — start immediately',
+    splashBtn:'Start Assessment',splashBtn2:'🏥 Specialized Centers',splashBtn3:'🎥 Smart Camera Exercises',
+    splashTime:'3-5 minutes • Free • No registration',
+    infoH:'Why Early Screening?',infoP:'Figures from peer-reviewed scientific publications',
+    s1:'per 10,000 children in Kuwait',s2:'M-CHAT-R/F sensitivity',
+    whatMChat:'What is M-CHAT-R/F?',
+    mChatDesc:'The Modified Checklist for Autism in Toddlers (Revised with Follow-up) is the most widely used early autism screening tool globally. Validated in a study of 16,071 children (Robins et al., Pediatrics 2014 — PMID: 24366990).',
+    whyEarly:'Why does early intervention matter?',
+    earlyDesc:'Diagnosis before age 3 dramatically improves outcomes in communication and behavior. In Robins 2014, children were diagnosed 2 years younger than the national median.',
+    howAI:'How does the AI work?',
+    aiDesc:"Numoo sends your answers to Anthropic's Claude model to generate a personalized Arabic or English report explaining each indicator.",
+    noRegH:'No Registration Required',
+    noRegDesc:'Start immediately with no account or password. Our goal is to remove every barrier to accessing vital information.',
+    disclaimerInfo:'<strong>Medical notice:</strong> Numoo is an early screening tool, not an official medical diagnosis. Results are indicative only. Diagnosis requires a qualified specialist team.',
+    startBtn:'Start Assessment →',
+    backTxt:'Back',backAge:'Back',backQ:'Back',backCam:'Back',backProg:'Back',backCent:'Back',backRes:'Back to Results',
+    ageH:'Select Age Group',ageP:'Questions differ by age — each stage has its own scientific criteria',
+    ag1:'16 — 30 months',ag1s:'Official M-CHAT-R/F',
+    ag2:'3 — 5 years',ag2s:'Preschool',
+    ag3:'6 — 12 years',ag3s:'School age',
+    ag4:'13 — 17 years',ag4s:'Adolescence',
+    whyAge:'Why does age matter?',
+    whyAgeDesc:'Each age group has specific scientific criteria. An 18-month-old is assessed with M-CHAT-R/F; a teenager with the AQ scale.',
+    loadTxt:'Numoo is analyzing your answers...',loadSub:'AI is reviewing the indicators',
+    ls1t:'Comparing with M-CHAT-R/F standard',ls2t:'Evaluating language & eye contact',
+    ls3t:'Analyzing behavioral patterns',ls4t:'Preparing report via Claude AI',
+    camH:'🎥 Smart Camera Exercises',camP:'Choose an exercise, then record the child',
+    camBadge:'Choose an exercise first 👇',
+    t0:'Eye Contact',t0d:'30 seconds',t1:'Name Response',t1d:'30 seconds',
+    t2:'Pointing Exercise',t2d:'45 seconds',t3:'Pretend Play',t3d:'60 seconds',
+    camOverlayTxt:'Choose an exercise to activate camera',camOverlaySub:'Camera works locally on your device only',
+    aiFeedH:'🤖 Numoo Guidance',
+    aiFeedTxt:'Choose an exercise and start recording to see guidance here.',
+    camNoteH:'Important Note',
+    camNoteP:'Camera analysis is a supportive tool, not a diagnosis. Camera works locally only.',
+    progH:'Track Child Development',progP:'Follow the growth journey week by week',
+    progSum:'Progress Summary',progNote:'Notable improvement in interaction and response',
+    progSkills:'Current Skills',sk1:'Eye Contact',sk1v:'Low',sk2:'Response',sk2v:'Medium',sk3:'Interaction',sk3v:'Medium',
+    progTL:'Timeline',
+    w1:'Week 1',w1t:'Follow-up level: Medium',w1n:'Started focusing on eye contact',
+    w2:'Week 2',w2t:'Slight improvement in name response',w2n:'Continuing daily activities',
+    w3:'Week 3',w3t:'Clear improvement in interaction 👏',w3n:'Eye contact improved',
+    addUpd:"Add this week's update",
+    centH:'🏥 Specialized Centers in Kuwait',centP:'Official centers supporting families',
+    c0n:'General Authority for Persons with Disabilities',c0p:'Hawalli, Beirut St — Main Government Authority',
+    c1n:'Kuwait Center for Autism',c1l:'📍 West Mishref — Mubarak Al-Abdullah Area',
+    c1b1:'Government',c1b2:'First center in Middle East 1994',c1b3:'Internationally accredited',
+    c2n:'Kuwait Autism Society',c2l:'📍 West Mishref — Mubarak Al-Abdullah Area',
+    c2b1:'Family Support',c2b2:'Counseling',c2b3:'Volunteer org',c2btn:'Contact',
+    c3l:'📍 Kuwait — Only branch in the Middle East',c3b2:'Private',c3b3:'Est. 2015',c3btn:'Website',
+    centNote:'⚠️ Verify working hours before visiting. This information is for guidance only.',
+    instrH:'📋 Parent Instructions',timerLabel:'seconds'
+  }
+};
+
+function L(ar,en){ return lang==='ar'?ar:en; }
+
+function setLang(l){
+  lang=l;
+  document.getElementById('htmlRoot').lang=l;
+  document.getElementById('htmlRoot').dir=l==='ar'?'rtl':'ltr';
+  document.getElementById('btnAR').classList.toggle('active',l==='ar');
+  document.getElementById('btnEN').classList.toggle('active',l==='en');
+  const S=STRINGS[l];
+  Object.keys(S).forEach(k=>{
+    const el=document.getElementById(k);
+    if(!el)return;
+    if(k==='pgList'){
+      el.innerHTML=S[k].map(i=>`<li>${i}</li>`).join('');
+    } else if(k==='disclaimerInfo'||k==='camNoteP'){
+      el.innerHTML=S[k];
+    } else {
+      el.textContent=S[k];
+    }
+  });
+  // Update question database labels if on assessment
+  if(document.getElementById('qBody').innerHTML && currentQ>=0){
+    renderQ();
+  }
+}
+
+// ══════════════════════════════
+// QUESTIONS DATABASE
+// ══════════════════════════════
+const QDB = {
+  toddler:[
+    {id:'name',icon:'👶',title:{ar:'اسم الطفل',en:"Child's Name"},text:{ar:'ما اسم الطفل؟',en:"What is the child's name?"},sub:{ar:'لتخصيص التقرير',en:'To personalize the report'},type:'text',placeholder:{ar:'مثال: فهد، نورة',en:'e.g. Fahad, Nora'}},
+    {id:'months',icon:'🎂',title:{ar:'العمر بالأشهر',en:'Age in months'},text:{ar:'كم عمره/عمرها بالأشهر؟',en:'How old in months?'},sub:{ar:'بين 16-30 شهراً',en:'Between 16-30 months'},type:'number',placeholder:{ar:'مثال: 22',en:'e.g. 22'},min:16,max:30},
+    {id:'pointing',icon:'👆',title:{ar:'الإشارة بالإصبع',en:'Pointing'},text:{ar:'هل يشير الطفل بإصبعه ليُريك شيئاً يثير اهتمامه؟',en:'Does the child point with their finger to show you something interesting?'},sub:{ar:'للمشاركة وليس للطلب فقط',en:'To share interest, not just to request'},type:'options',source:'M-CHAT-R/F Item 7',options:{ar:['نعم، يشير للمشاركة بوضوح','أحياناً','نادراً','لا يشير أبداً'],en:['Yes, clearly points to share','Sometimes','Rarely','Never points']}},
+    {id:'gaze_follow',icon:'👁️',title:{ar:'متابعة الإشارة',en:'Gaze Following'},text:{ar:'إذا أشرت بإصبعك نحو شيء، هل ينظر إليه؟',en:'When you point at something, does the child look at it?'},sub:{ar:'وليس فقط لإصبعك',en:'Not just at your finger'},type:'options',source:'M-CHAT-R/F Item 11',options:{ar:['نعم، ينظر للشيء دائماً','أحياناً','نادراً','لا ينظر'],en:['Yes, always looks at the thing','Sometimes','Rarely','Does not look']}},
+    {id:'social_play',icon:'🤝',title:{ar:'اللعب الاجتماعي',en:'Social Play'},text:{ar:'هل يستمتع باللعب مع الأشخاص الآخرين؟',en:'Does the child enjoy playing with other people?'},sub:{ar:'مثل peek-a-boo أو الدغدغة',en:'Like peek-a-boo or tickling'},type:'options',source:'M-CHAT-R/F Item 2',options:{ar:['نعم، يستمتع دائماً','أحياناً','نادراً','لا يستمتع'],en:['Yes, always enjoys it','Sometimes','Rarely','Does not enjoy']}},
+    {id:'eyecontact',icon:'👀',title:{ar:'التواصل البصري',en:'Eye Contact'},text:{ar:'هل ينظر في عينيك لمدة ثانية أو أكثر؟',en:'Does the child look into your eyes for a second or more?'},sub:{ar:'أثناء اللعب أو الحديث',en:'During play or conversation'},type:'options',source:'M-CHAT-R/F Item 2',options:{ar:['نعم، تواصل بصري جيد','أحياناً','نادراً','لا يكاد يفعل'],en:['Yes, good eye contact','Sometimes','Rarely','Barely does it']}},
+    {id:'name_resp',icon:'📢',title:{ar:'الاستجابة للاسم',en:'Name Response'},text:{ar:'هل يستجيب عند مناداته باسمه؟',en:'Does the child respond when called by name?'},sub:{ar:'في بيئة هادئة نسبياً',en:'In a relatively quiet environment'},type:'options',source:'M-CHAT-R/F Item 3',options:{ar:['نعم، يستجيب دائماً','أحياناً','نادراً','لا يستجيب'],en:['Yes, always responds','Sometimes','Rarely','Does not respond']}},
+    {id:'pretend',icon:'🎭',title:{ar:'اللعب التخيلي',en:'Pretend Play'},text:{ar:'هل يمارس لعباً تخيلياً؟',en:'Does the child engage in pretend play?'},sub:{ar:'مثل التظاهر بشرب من كوب فارغ',en:'Like pretending to drink from an empty cup'},type:'options',source:'M-CHAT-R/F Item 6',options:{ar:['نعم، يلعب تخيلياً','أحياناً','نادراً','لا يفعل'],en:['Yes, plays pretend','Sometimes','Rarely','Does not']}},
+    {id:'repetition',icon:'🔄',title:{ar:'الحركات المتكررة',en:'Repetitive Movements'},text:{ar:'هل يكرر حركات جسدية بشكل لافت؟',en:'Does the child repeat body movements noticeably?'},sub:{ar:'مثل هز الجسم أو رفرفة اليدين',en:'Like rocking body or flapping hands'},type:'options',source:'DSM-5 Criterion B1',options:{ar:['لا، نادراً جداً','أحياناً بشكل بسيط','كثيراً ويصعب إيقافه','دائماً وبشكل مكثف'],en:['No, very rarely','Sometimes, mildly','Often, hard to stop','Always, intensely']}},
+    {id:'concern',icon:'💭',title:{ar:'انطباع الأهل',en:'Parent Concern'},text:{ar:'ما مستوى قلقك على تطور طفلك؟',en:"How concerned are you about the child's development?"},sub:{ar:'انطباع الأهل مؤشر تشخيصي معتمد',en:'Parental impression is a validated diagnostic indicator'},type:'options',source:'M-CHAT-R/F Parental Concern',options:{ar:['لا قلق على الإطلاق','بعض التساؤلات','قلق واضح','قلق شديد وأحتاج مساعدة فورية'],en:['No concern at all','Some questions','Clear concern','Very concerned, need help now']}}
+  ],
+  preschool:[
+    {id:'name',icon:'👶',title:{ar:'اسم الطفل',en:"Child's Name"},text:{ar:'ما اسم الطفل؟',en:"Child's name?"},sub:{ar:'لتخصيص التقرير',en:'To personalize'},type:'text',placeholder:{ar:'مثال: فهد، نورة',en:'e.g. Fahad, Nora'}},
+    {id:'age_y',icon:'🎂',title:{ar:'العمر',en:'Age'},text:{ar:'كم عمره/عمرها؟',en:'Age in years?'},sub:{ar:'بين 3-5 سنوات',en:'3-5 years'},type:'number',placeholder:{ar:'مثال: 4',en:'e.g. 4'},min:3,max:5},
+    {id:'speech',icon:'💬',title:{ar:'الكلام',en:'Speech'},text:{ar:'هل يتحدث بجمل مفهومة لأشخاص خارج الأسرة؟',en:'Does the child speak in sentences understood by strangers?'},sub:{ar:'طفل 3 سنوات: جمل من 3 كلمات',en:'3-year-old: at least 3-word sentences'},type:'options',source:'AAP Language Milestones 2020',options:{ar:['نعم، جمل كاملة ومفهومة','جمل قصيرة تفهمها الأسرة','كلمات منفردة فقط','لا يتحدث تقريباً'],en:['Yes, full clear sentences','Short sentences family understands','Single words only','Barely speaks']}},
+    {id:'play_peers',icon:'🤝',title:{ar:'اللعب مع الأقران',en:'Peer Play'},text:{ar:'كيف يتفاعل مع أطفال في نفس العمر؟',en:'How does the child interact with peers?'},sub:{ar:'في الحضانة أو عند الأقارب',en:'At daycare or relatives'},type:'options',source:'DSM-5 Criterion A2',options:{ar:['يلعب ويتفاعل بشكل طبيعي','يراقب لكن يندمج أحياناً','يفضل اللعب بمفرده','لا يهتم بالأطفال الآخرين'],en:['Plays and interacts naturally','Watches but sometimes joins','Prefers playing alone','No interest in other children']}},
+    {id:'eye',icon:'👀',title:{ar:'التواصل البصري',en:'Eye Contact'},text:{ar:'هل ينظر في عيون من يتحدث إليهم؟',en:'Does the child look into the eyes of those they speak to?'},sub:{ar:'خلال التفاعل اليومي',en:'During daily interaction'},type:'options',source:'M-CHAT-R/F adapted',options:{ar:['نعم، بشكل طبيعي','أحياناً','نادراً','لا يكاد يفعل'],en:['Yes, normally','Sometimes','Rarely','Barely']}},
+    {id:'rigid',icon:'⚙️',title:{ar:'قبول التغيير',en:'Accepting Change'},text:{ar:'هل يصعب قبول التغييرات في الروتين؟',en:'Does the child struggle with routine changes?'},sub:{ar:'مثل تغيير طريق المدرسة',en:'Like changing the school route'},type:'options',source:'DSM-5 Criterion B2',options:{ar:['يتكيف بسهولة','يضايقه قليلاً ثم يتكيف','يضايقه كثيراً','ردود فعل حادة عند أي تغيير'],en:['Adapts easily','Bothered a little then adapts','Very bothered','Intense reactions to any change']}},
+    {id:'interest_narrow',icon:'🔭',title:{ar:'الاهتمام المحدود',en:'Restricted Interest'},text:{ar:'هل لديه اهتمام شديد بموضوع واحد؟',en:'Does the child have an intense interest in one topic?'},sub:{ar:'مستوى يفوق الأقران',en:'Beyond what peers show'},type:'options',source:'DSM-5 Criterion B3',options:{ar:['اهتمامات متنوعة وطبيعية','اهتمام خاص لكن متوازن','اهتمام شديد يؤثر على حياته','اهتمام وسواسي حصري'],en:['Varied, normal interests','Special interest but balanced','Intense, affects daily life','Obsessive, exclusive interest']}},
+    {id:'sensory',icon:'✋',title:{ar:'الحساسية الحسية',en:'Sensory Sensitivity'},text:{ar:'هل يُبالغ في رد الفعل للأصوات أو اللمس؟',en:'Does the child overreact to sounds or touch?'},sub:{ar:'مثل تغطية أذنيه من أصوات طبيعية',en:'Like covering ears from normal sounds'},type:'options',source:'DSM-5 Criterion B4',options:{ar:['حساسية طبيعية','حساسية بسيطة','حساسية ملحوظة','حساسية شديدة جداً'],en:['Normal sensitivity','Mild sensitivity','Noticeable sensitivity','Very severe sensitivity']}},
+    {id:'name_call',icon:'📢',title:{ar:'الاستجابة للاسم',en:'Name Response'},text:{ar:'هل يستجيب فورياً عند مناداته باسمه؟',en:'Does the child respond immediately when called by name?'},sub:{ar:'في الأوضاع العادية',en:'In normal situations'},type:'options',source:'M-CHAT-R/F',options:{ar:['دائماً','أغلب الأحيان','أحياناً','نادراً أو أبداً'],en:['Always','Most of the time','Sometimes','Rarely or never']}},
+    {id:'concern',icon:'💭',title:{ar:'انطباع الأهل',en:'Parent Concern'},text:{ar:'ما مستوى قلقك الإجمالي؟',en:'Overall concern level?'},sub:{ar:'انطباعك مهم علمياً',en:'Your impression matters scientifically'},type:'options',source:'Parental concern scale',options:{ar:['لا قلق','بعض التساؤلات','قلق واضح','قلق شديد'],en:['No concern','Some questions','Clear concern','Very concerned']}}
+  ],
+  school:[
+    {id:'name',icon:'👦',title:{ar:'اسم الطفل',en:"Child's Name"},text:{ar:'ما اسم الطفل؟',en:"Name?"},sub:{ar:'لتخصيص التقرير',en:'To personalize'},type:'text',placeholder:{ar:'مثال: فهد، نورة',en:'e.g. Fahad, Nora'}},
+    {id:'age_y',icon:'🎂',title:{ar:'العمر',en:'Age'},text:{ar:'كم عمره/عمرها؟',en:'Age in years?'},sub:{ar:'6-12 سنة',en:'6-12 years'},type:'number',placeholder:{ar:'مثال: 8',en:'e.g. 8'},min:6,max:12},
+    {id:'social_school',icon:'🏫',title:{ar:'العلاقات المدرسية',en:'School Relationships'},text:{ar:'كيف علاقته/علاقتها بزملاء الفصل؟',en:'How are their relationships with classmates?'},sub:{ar:'اللعب في الاستراحة',en:'Recess and daily interaction'},type:'options',source:'ADOS-2 Module 3',options:{ar:['علاقات جيدة وطبيعية','أصدقاء قليلون','صعوبة واضحة في الصداقات','لا صداقات'],en:['Good, normal relationships','Few friends','Clear difficulty with friendships','No friends']}},
+    {id:'conversation',icon:'💬',title:{ar:'المحادثة التبادلية',en:'Reciprocal Conversation'},text:{ar:'هل يستطيع محادثة ذهاباً وإياباً؟',en:'Can they hold a back-and-forth conversation?'},sub:{ar:'وليس مونولوجاً أحادي الاتجاه',en:'Not just a one-sided monologue'},type:'options',source:'ADI-R Domain A',options:{ar:['نعم، محادثات طبيعية','أحياناً لكن بصعوبة','في الغالب حديث أحادي','لا يستطيع'],en:['Yes, normal conversations','Sometimes but with difficulty','Mostly one-sided','Cannot have reciprocal conversation']}},
+    {id:'emotions',icon:'❤️',title:{ar:'فهم مشاعر الآخرين',en:"Understanding Others' Emotions"},text:{ar:'هل يُدرك متى يكون شخص ما حزيناً أو سعيداً؟',en:'Does the child notice when someone is sad or happy?'},sub:{ar:'التعاطف ومعالجة المشاعر',en:'Empathy and emotional processing'},type:'options',source:'Theory of Mind — Baron-Cohen 1985',options:{ar:['نعم، يُدرك ويتفاعل','يُدرك أحياناً','صعوبة في قراءة المشاعر','لا يُدرك تقريباً'],en:['Yes, notices and responds','Sometimes notices','Difficulty reading emotions','Barely notices']}},
+    {id:'rigid_school',icon:'⚙️',title:{ar:'المرونة',en:'Flexibility'},text:{ar:'كيف يتعامل مع التغييرات المفاجئة؟',en:'How does the child handle unexpected changes?'},sub:{ar:'مثل تغيير الجدول',en:'Like schedule changes'},type:'options',source:'DSM-5 Criterion B2',options:{ar:['يتكيف بمرونة','يضايقه قليلاً','ضيق ملحوظ','انهيار أو ردود شديدة'],en:['Adapts flexibly','Bothered a little','Noticeable distress','Meltdown or intense reactions']}},
+    {id:'special_interest',icon:'🔭',title:{ar:'الاهتمامات المكثفة',en:'Intense Interests'},text:{ar:'هل لديه اهتمام محدد شديد؟',en:'Does the child have a very specific intense interest?'},sub:{ar:'يفوق الأقران بشكل واضح',en:'Far beyond what peers show'},type:'options',source:'DSM-5 Criterion B3',options:{ar:['اهتمامات متنوعة','اهتمام خاص متوازن','اهتمام مكثف','اهتمام وسواسي'],en:['Varied interests','Special but balanced interest','Intense interest','Obsessive interest']}},
+    {id:'sensory',icon:'✋',title:{ar:'الحساسية الحسية',en:'Sensory Sensitivity'},text:{ar:'هل تؤثر الحساسية الحسية على اندماجه في بيئات عادية؟',en:'Does sensory sensitivity affect participation in normal environments?'},sub:{ar:'أصوات/أضواء/ملمس',en:'Sounds/lights/textures'},type:'options',source:'DSM-5 Criterion B4',options:{ar:['لا تأثير','تأثير بسيط','تأثير معتدل','تأثير شديد'],en:['No impact','Mild impact','Moderate impact','Severe impact']}},
+    {id:'academic_social',icon:'📚',title:{ar:'الاندماج المدرسي',en:'School Integration'},text:{ar:'كيف أداء الطفل في البيئة المدرسية؟',en:"How is the child's performance in school?"},sub:{ar:'اجتماعياً وأكاديمياً',en:'Socially and academically'},type:'options',source:'Numoo',options:{ar:['اندماج جيد','اندماج متوسط','صعوبة ملحوظة','صعوبة شديدة'],en:['Good integration','Medium integration','Noticeable difficulty','Severe difficulty']}},
+    {id:'concern',icon:'💭',title:{ar:'انطباع الأهل',en:'Parent Concern'},text:{ar:'مستوى قلقك الإجمالي؟',en:'Overall concern?'},sub:{ar:'انطباعك مهم',en:'Your impression matters'},type:'options',source:'Parental concern',options:{ar:['لا قلق','تساؤلات','قلق واضح','قلق شديد'],en:['No concern','Questions','Clear concern','Very concerned']}}
+  ],
+  teen:[
+    {id:'name',icon:'🧑',title:{ar:'الاسم',en:'Name'},text:{ar:'ما اسمه/اسمها؟',en:'Name?'},sub:{ar:'لتخصيص التقرير',en:'To personalize'},type:'text',placeholder:{ar:'مثال: فهد، نورة',en:'e.g. Fahad, Nora'}},
+    {id:'age_y',icon:'🎂',title:{ar:'العمر',en:'Age'},text:{ar:'كم عمره/عمرها؟',en:'Age?'},sub:{ar:'13-17 سنة',en:'13-17 years'},type:'number',placeholder:{ar:'مثال: 15',en:'e.g. 15'},min:13,max:17},
+    {id:'peers',icon:'👥',title:{ar:'العلاقات الاجتماعية',en:'Social Relationships'},text:{ar:'كيف علاقته/علاقتها بأقران نفس العمر؟',en:'How are their peer relationships?'},sub:{ar:'الصداقات والتفاعل',en:'Friendships and social interaction'},type:'options',source:'ADOS-2 Module 4',options:{ar:['علاقات مُرضية','صداقات قليلة','صعوبة كبيرة','عزلة شبه كاملة'],en:['Satisfactory relationships','Few friendships','Major difficulty','Near-complete isolation']}},
+    {id:'communication',icon:'💬',title:{ar:'التعبير عن النفس',en:'Self-expression'},text:{ar:'هل يتعبر بوضوح عن أفكاره ومشاعره؟',en:'Can they clearly express thoughts and feelings?'},sub:{ar:'في المواقف الاجتماعية',en:'In social situations'},type:'options',source:'ADI-R',options:{ar:['تعبير واضح','كافٍ مع بعض الصعوبات','صعوبة واضحة','صعوبة شديدة'],en:['Clear expression','Adequate with some difficulty','Clear difficulty','Severe difficulty']}},
+    {id:'nonverbal',icon:'🤐',title:{ar:'قراءة الإشارات الاجتماعية',en:'Reading Social Cues'},text:{ar:'هل يفهم/تفهم لغة الجسد والتلميحات الاجتماعية؟',en:'Do they understand body language and social cues?'},sub:{ar:'مثل السخرية أو إنهاء المحادثة',en:'Like sarcasm or ending a conversation'},type:'options',source:'AQ Adolescent — Baron-Cohen 2001',options:{ar:['يفهمها بشكل طبيعي','يفهمها أحياناً','صعوبة ملحوظة','يُخطئ دائماً تقريباً'],en:['Understands normally','Sometimes understands','Noticeable difficulty','Almost always misreads']}},
+    {id:'routine',icon:'⚙️',title:{ar:'التمسك بالروتين',en:'Routine Adherence'},text:{ar:'هل يُصرّ على الروتين ويصعب قبول أي تغيير؟',en:'Do they insist on routine and struggle with any change?'},sub:{ar:'حتى التغييرات البسيطة',en:'Even minor changes'},type:'options',source:'DSM-5 Criterion B2',options:{ar:['مرونة جيدة','بعض الصعوبة','صعوبة واضحة','ردود فعل شديدة'],en:['Good flexibility','Some difficulty','Clear difficulty','Intense reactions']}},
+    {id:'interest_teen',icon:'🔭',title:{ar:'الاهتمامات المكثفة',en:'Intense Interests'},text:{ar:'هل لديه/لديها اهتمام شديد يستغرق معظم وقته/وقتها؟',en:'Do they have an intense interest consuming most of their time?'},sub:{ar:'مستوى يفوق الأقران',en:'Far beyond peers'},type:'options',source:'DSM-5 Criterion B3',options:{ar:['اهتمامات متنوعة','اهتمام خاص متوازن','اهتمام مكثف','اهتمام وسواسي'],en:['Varied interests','Special but balanced','Intense interest','Obsessive interest']}},
+    {id:'sensory_teen',icon:'✋',title:{ar:'الحساسية الحسية',en:'Sensory Sensitivity'},text:{ar:'هل تؤثر الحساسية الحسية على حياته/حياتها اليومية؟',en:'Does sensory sensitivity affect daily life?'},sub:{ar:'أصوات/أضواء/ملمس/روائح',en:'Sounds/lights/textures/smells'},type:'options',source:'DSM-5 Criterion B4',options:{ar:['لا تأثير','تأثير بسيط','تأثير معتدل','تأثير شديد'],en:['No impact','Mild impact','Moderate impact','Severe impact']}},
+    {id:'self_aware',icon:'🪞',title:{ar:'الوعي الذاتي الاجتماعي',en:'Social Self-awareness'},text:{ar:'هل يُعبّر/تُعبّر عن شعور بأنه/أنها مختلف/مختلفة اجتماعياً؟',en:'Do they express feeling socially different from peers?'},sub:{ar:'مؤشر مهم لدى المراهقين',en:'Important indicator for adolescents'},type:'options',source:'AQ Adolescent',options:{ar:['لا يُعبّر','أحياناً','يُعبّر بوضوح','يعاني منه بشكل مؤلم'],en:["Doesn't express it",'Sometimes','Expresses it clearly','Suffers from it painfully']}},
+    {id:'concern',icon:'💭',title:{ar:'انطباع الأهل',en:'Parent Concern'},text:{ar:'مستوى قلقك الإجمالي؟',en:'Overall concern?'},sub:{ar:'انطباعك مهم',en:'Your impression matters'},type:'options',source:'Parental concern',options:{ar:['لا قلق','تساؤلات','قلق واضح','قلق شديد'],en:['No concern','Questions','Clear concern','Very concerned']}}
+  ]
+};
+
+const RW={pointing:[0,1,2.5,3.5],gaze_follow:[0,1,2,3],social_play:[0,.5,1.5,2.5],eyecontact:[0,1,2,3],eye:[0,1,2,3],name_resp:[0,1,2,3],name_call:[0,.5,1.5,2.5],pretend:[0,1,2.5,3.5],repetition:[0,.5,2,3],rigid:[0,.5,2,3],rigid_school:[0,.5,2,3],routine:[0,.5,2,3],interest_narrow:[0,.5,2,3],special_interest:[0,.5,2,3],interest_teen:[0,.5,2,3],sensory:[0,.5,1.5,3],sensory_teen:[0,.5,1.5,3],speech:[0,1,2,3],conversation:[0,1,2,3],communication:[0,1,2,3],play_peers:[0,1,2,3],social_school:[0,1,2,3],peers:[0,1,2,3],emotions:[0,1,2,3],nonverbal:[0,1,2,3],academic_social:[0,1,2,3],self_aware:[0,0,1.5,3],concern:[0,.5,1.5,2.5]};
+
+let currentQ=0,answers={},ageGroup='toddler',aiReport='',scoreData={};
+
+// ── CONSENT ──
+function checkConsent(){
+  const on=document.getElementById('consent').checked;
+  const b=document.getElementById('consentBtn');
+  b.style.opacity=on?'1':'.4';
+  b.style.pointerEvents=on?'auto':'none';
+}
+function acceptConsent(){
+  try{localStorage.setItem('numuw_consent','1')}catch(e){}
+  showScreen('splash');
+}
+
+// ── NAVIGATION ──
+function showScreen(id){
+  if(id==='progress'){setTimeout(showRealProgress,50);} 
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function selectAge(group,el){
+  ageGroup=group;
+  document.querySelectorAll('.age-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  setTimeout(()=>{currentQ=0;answers={};showScreen('assessment');renderQ();},280);
+}
+
+// ── ASSESSMENT ──
+function renderQ(){
+  const qs=QDB[ageGroup];const q=qs[currentQ];const total=qs.length;
+  const pct=Math.round(currentQ/total*100);
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('stepLbl').textContent=`${currentQ+1} / ${total}`;
+  document.getElementById('qTitle').textContent=typeof q.title==='object'?q.title[lang]:q.title;
+  const text=typeof q.text==='object'?q.text[lang]:q.text;
+  const sub=typeof q.sub==='object'?q.sub[lang]:q.sub;
+  const ph=typeof q.placeholder==='object'?q.placeholder[lang]:q.placeholder;
+
+  let html=`<div class="q-card">`;
+  html+=`<span class="q-icon">${q.icon}</span>`;
+  if(q.source) html+=`<div class="q-source">📚 ${q.source}</div>`;
+  html+=`<div class="q-title">${text}</div><div class="q-sub">${sub}</div>`;
+
+  if(q.type==='options'){
+    const opts=typeof q.options==='object'&&!Array.isArray(q.options)?q.options[lang]:q.options;
+    html+=`<div class="opts">`;
+    opts.forEach((o,i)=>{
+      const sel=answers[q.id]===i?'sel':'';
+      html+=`<button class="opt ${sel}" onclick="pickOpt(${i})">${o}</button>`;
+    });
+    html+=`</div>`;
+  } else {
+    html+=`<label class="sr-only" for="ti">${text}</label>
+      <input type="${q.type}" class="txt-input" id="ti" placeholder="${ph}" value="${answers[q.id]||''}"
+        ${q.min?`min="${q.min}"`:''}${q.max?` max="${q.max}"`:''}
+        oninput="answers['${q.id}']=this.value">`;
+  }
+  html+=`</div>
+    <div class="nav-row">
+      ${currentQ>0?`<button class="btn-back-sm" onclick="prevQ()"><span>${STRINGS[lang].backQ}</span></button>`:''}
+      <button class="btn-next" onclick="nextQ()">${currentQ===total-1?L('احسب النتيجة 🎯','Calculate Results 🎯'):L('التالي ←','Next →')}</button>
+    </div>`;
+  document.getElementById('qBody').innerHTML=html;
+  try{localStorage.setItem('numuw_progress',JSON.stringify({answers,currentQ,ageGroup}))}catch(e){}
+}
+
+function pickOpt(i){
+  answers[QDB[ageGroup][currentQ].id]=i;
+  document.querySelectorAll('.opt').forEach((b,idx)=>b.classList.toggle('sel',idx===i));
+}
+function nextQ(){
+  const q=QDB[ageGroup][currentQ];
+  if(q.type!=='options'){
+    const el=document.getElementById('ti');const v=el?.value?.trim();
+    if(!v){showToast(L('⚠️ الرجاء تعبئة هذا الحقل','⚠️ Please fill this field'));el?.focus();return;}
+    if(q.type==='number'){const n=parseInt(v);if(isNaN(n)||(q.min&&n<q.min)||(q.max&&n>q.max)){showToast(L(`⚠️ بين ${q.min} و ${q.max}`,`⚠️ Between ${q.min} and ${q.max}`));return;}}
+    answers[q.id]=v;
+  } else if(answers[q.id]===undefined){showToast(L('⚠️ الرجاء اختيار إجابة','⚠️ Please select an answer'));return;}
+  if(currentQ<QDB[ageGroup].length-1){currentQ++;renderQ();}
+  else runAnalysis();
+}
+function prevQ(){if(currentQ>0){currentQ--;renderQ();}else showScreen('ageSelect');}
+
+// ── RISK CALC ──
+function calcRisk(){
+  let score=0,maxScore=0;
+  Object.keys(RW).forEach(k=>{if(answers[k]!==undefined&&RW[k]){score+=RW[k][answers[k]]||0;maxScore+=Math.max(...RW[k]);}});
+  const pct=maxScore>0?(score/maxScore)*100:0;
+  scoreData={score:Math.round(score*10)/10,maxScore:Math.round(maxScore*10)/10,pct:Math.round(pct)};
+  return pct<25?'low':pct<55?'medium':'high';
+}
+function getIndScore(keys){
+  let t=0,c=0;
+  keys.forEach(k=>{if(answers[k]!==undefined&&RW[k]){const w=RW[k][answers[k]]||0;const m=Math.max(...RW[k]);t+=(w/m)*100;c++;}});
+  return c>0?Math.round(t/c):null;
+}
+
+// ── CLAUDE API ──
+async function getAIReport(risk,name,group){
+  const qs=QDB[group];
+  const answersText=qs.filter(q=>q.type==='options'&&answers[q.id]!==undefined)
+    .map(q=>{const opts=typeof q.options==='object'&&!Array.isArray(q.options)?q.options['ar']:q.options;const title=typeof q.title==='object'?q.title['ar']:q.title;return `- ${title}: ${opts[answers[q.id]]||'—'}`;}).join('\n');
+  const ageLbls={toddler:'16-30 شهراً',preschool:'3-5 سنوات',school:'6-12 سنة',teen:'13-17 سنة'};
+  const riskLbls={low:'منخفض',medium:'متوسط',high:'مرتفع'};
+  const outputLang=lang==='en'?'English':'Arabic';
+
+  const prompt=`You are a specialist in analyzing M-CHAT-R/F early autism screening results. Respond in ${outputLang}.
+
+Child: ${name} | Age group: ${ageLbls[group]} | Risk: ${riskLbls[risk]} | Score: ${scoreData.score}/${scoreData.maxScore} (${scoreData.pct}%)
+
+Parent answers:
+${answersText}
+
+Write a professional, empathetic analytical report including:
+1. Executive summary (2 direct sentences)
+2. Key indicators: explain the 2-3 most notable answers scientifically
+3. Strengths: positive findings
+4. Direct recommendation: what should parents do in the next 2 weeks specifically?
+5. Warm closing sentence
+
+Requirements: empathetic, evidence-based, clear, practical, 200-250 words, mention this is M-CHAT-R/F guidance not diagnosis, no generic AI phrases. Start directly with content.`;
+
+  try{
+    const res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:prompt}]})});
+    if(!res.ok)throw new Error(`${res.status}`);
+    const data=await res.json();
+    return data?.content?.[0]?.text||null;
+  }catch(e){console.warn('Claude API:',e.message);return null;}
+}
+
+// ── ANALYSIS ──
+async function runAnalysis(){
+  showScreen('loading');
+  ['ls1','ls2','ls3','ls4'].forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('on'),i*700));
+  const risk=calcRisk();const name=answers.name||L('الطفل','the child');
+  const aiPromise=getAIReport(risk,name,ageGroup);
+  await new Promise(r=>setTimeout(r,3600));
+  aiReport=await aiPromise;
+  try{localStorage.removeItem('numuw_progress')}catch(e){}
+  showResults(risk,name);
+}
+
+// ── RESULTS ──
+function showResults(risk,name){
+  const age=answers.age||answers.months||answers.age_y||'';
+  const ageLbl=age?`(${age} ${ageGroup==='toddler'?L('شهراً','months'):L('سنة','years')})`:'';
+  const cfg={
+    low:{cls:'green',icon:'✅',level:'low',
+      levelTxt:L('▲ مستوى المتابعة: منخفض','▲ Follow-up level: Low'),
+      title:L('مؤشرات مطمئنة بشكل عام','Generally Reassuring Indicators'),
+      sub:L(`إجابات ${name} ${ageLbl} تُشير إلى مؤشرات نمو مطمئنة.`,`Answers for ${name} ${ageLbl} show reassuring development indicators.`)},
+    medium:{cls:'yellow',icon:'⚠️',level:'medium',
+      levelTxt:L('◆ مستوى المتابعة: متوسط','◆ Follow-up level: Medium'),
+      title:L('مؤشرات تستحق الانتباه','Indicators Worth Attention'),
+      sub:L(`بعض إجابات ${name} ${ageLbl} تستحق المتابعة مع متخصص.`,`Some answers for ${name} ${ageLbl} warrant specialist follow-up.`)},
+    high:{cls:'red',icon:'🔴',level:'high',
+      levelTxt:L('● يستوجب تقييماً متخصصاً عاجلاً','● Urgent specialist evaluation recommended'),
+      title:L('ننصح بتقييم متخصص في أسرع وقت','Specialist Evaluation Recommended Urgently'),
+      sub:L(`إجابات ${name} ${ageLbl} تشير لمؤشرات تستوجب تقييماً عاجلاً.`,`Answers for ${name} ${ageLbl} indicate markers requiring urgent evaluation.`)}
+  };
+  const c=cfg[risk];
+  document.getElementById('resTop').innerHTML=`
+    <div class="res-icon ${c.cls}">${c.icon}</div>
+    <div class="res-title">${c.title}</div>
+    <div class="res-sub">${c.sub}</div>
+    <div class="level-badge ${c.level}">${c.levelTxt}</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:8px">${L('الدرجة','Score')}: ${scoreData.score}/${scoreData.maxScore} (${scoreData.pct}%)</div>`;
+
+  const rC=cls=>cls==='low'?'var(--green)':cls==='mid'?'var(--yellow)':'var(--red)';
+  const rL=v=>v<33?L('منخفض','Low'):v<66?L('متوسط','Medium'):L('مرتفع','High');
+  const indGroups=[
+    {lbl:L('التواصل البصري','Eye Contact'),keys:['eyecontact','eye']},
+    {lbl:L('الاستجابة الاجتماعية','Social Response'),keys:['name_resp','name_call','pointing','gaze_follow']},
+    {lbl:L('التواصل اللغوي','Language Communication'),keys:['speech','conversation','communication']},
+    {lbl:L('الأنماط السلوكية','Behavioral Patterns'),keys:['repetition','rigid','rigid_school','routine']},
+    {lbl:L('المهارات الاجتماعية','Social Skills'),keys:['play_peers','social_school','peers','emotions','social_play']}
+  ].filter(g=>getIndScore(g.keys)!==null);
+
+  const indsHtml=indGroups.map(g=>{const pct=getIndScore(g.keys);const cls=pct<33?'low':pct<66?'mid':'high';return `<div class="ind-row"><div class="ind-lbl">${g.lbl}</div><div class="ind-track"><div class="ind-fill ${cls}" style="width:${pct}%"></div></div><div class="ind-val" style="color:${rC(cls)}">${rL(pct)}</div></div>`;}).join('');
+
+  const qs=QDB[ageGroup];const concerns=[],positives=[];
+  qs.forEach(q=>{if(q.type!=='options'||answers[q.id]===undefined)return;const w=RW[q.id]?.[answers[q.id]]||0;const m=RW[q.id]?Math.max(...RW[q.id]):0;const opts=typeof q.options==='object'&&!Array.isArray(q.options)?q.options[lang]:q.options;const title=typeof q.title==='object'?q.title[lang]:q.title;const src=q.source||'';if(w>=2)concerns.push({title,ans:opts[answers[q.id]],src,note:getNote(q.id)});else if(w===0&&m>0)positives.push({title,ans:opts[answers[q.id]]});});
+
+  const aiSec=aiReport
+    ?`<div class="ai-report-box"><h3 style="color:var(--teal-d);margin-bottom:12px">🤖 ${L('تقرير Claude AI الشخصي','Claude AI Personal Report')}</h3><div style="font-size:14px;color:var(--text);line-height:1.9;white-space:pre-wrap">${aiReport}</div><div style="font-size:11px;color:var(--muted);margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">${L('مُولَّد بواسطة Claude من Anthropic • يستند إلى M-CHAT-R/F وDSM-5','Generated by Claude from Anthropic • Based on M-CHAT-R/F and DSM-5')}</div></div>`
+    :`<div class="ai-report-box"><h3 style="color:var(--teal-d);margin-bottom:12px">📊 ${L('تقرير التحليل','Analysis Report')}</h3><p style="font-size:14px;color:var(--muted)">${L('التحليل مبني على نظام تقييم M-CHAT-R/F المعتمد. لتفعيل تقرير Claude AI الشخصي يلزم ربط Anthropic API.','Analysis based on the validated M-CHAT-R/F scoring system. To enable the personal Claude AI report, Anthropic API connection is required.')}</p></div>`;
+
+  const phasesByCls={
+    low:[{title:L('في المنزل الآن','At Home Now'),icon:'🏠',items:[L('مراقبة شهرية لمراحل النمو','Monthly developmental milestone monitoring'),L('دعم التواصل اليومي عبر القراءة واللعب','Support daily communication through reading and play'),L('زيارة دورية لطبيب الأطفال كل 3 أشهر','Regular pediatrician visit every 3 months')]}],
+    medium:[{title:L('خلال الأسبوعين القادمين','In the Next Two Weeks'),icon:'📅',items:[L('حجز موعد مع طبيب نمو أو أخصائي تخاطب','Book appointment with developmental pediatrician or speech therapist'),L('توثيق السلوكيات اللافتة بمقاطع فيديو','Document notable behaviors with short video clips'),L('مناقشة نتائج هذا التقييم مع طبيب الأسرة','Discuss results with family doctor')]},{title:L('في المنزل يومياً','At Home Daily'),icon:'🏠',items:[L('5 دقائق تواصل بصري يومياً','5 minutes eye contact daily'),L('تكرار الاسم والكلمات البسيطة بوضوح','Repeat name and simple words clearly'),L('ألعاب التناوب لتطوير التفاعل','Turn-taking games to develop interaction')]}],
+    high:[{title:L('فوري — هذا الأسبوع','Immediate — This Week'),icon:'🚨',items:[L('التواصل مع مركز الكويت للتوحد: 25309300','Contact Kuwait Center for Autism: 25309300'),L('الهيئة العامة لشؤون ذوي الإعاقة: 1811123','General Authority for Persons with Disabilities: 1811123'),L('طباعة هذا التقرير وإحضاره لأول موعد','Print this report and bring it to the first appointment')]},{title:L('المرحلة الأولى — المنزل','Phase 1 — Home'),icon:'🏠',items:[L('تطبيق أنشطة التواصل البصري يومياً','Apply eye contact activities daily'),L('توثيق السلوكيات يومياً','Document behaviors daily'),L('التواصل مع أهالٍ آخرين للدعم','Connect with other parents for support')]},{title:L('المرحلة الثانية — المراكز','Phase 2 — Centers'),icon:'🏥',items:[L('تقييم متكامل مع أخصائيين','Comprehensive evaluation with specialists'),L('بدء جلسات ABA إن أُوصي بها','Start ABA sessions if recommended'),L('برنامج تربوي فردي (IEP)','Individual Education Plan (IEP)')]}]
+  };
+
+  const phasesHtml=(phasesByCls[risk]||[]).map(ph=>`<div style="background:#fff;border-radius:var(--r);padding:18px;margin-bottom:12px;box-shadow:var(--shadow);border-right:4px solid var(--teal)"><div style="font-size:15px;font-weight:800;color:var(--navy);margin-bottom:10px">${ph.icon} ${ph.title}</div>${ph.items.map(it=>`<div style="background:var(--soft);border-radius:10px;padding:11px 13px;margin-bottom:8px;font-size:13px;color:var(--text);line-height:1.75">✓ ${it}</div>`).join('')}</div>`).join('');
+
+  // Build heatmap
+  const hmData=[
+    {lbl:L('التواصل البصري','Eye Contact'),keys:['eyecontact','eye'],icon:'👁️'},
+    {lbl:L('الاستجابة','Response'),keys:['name_resp','name_call'],icon:'👂'},
+    {lbl:L('التواصل اللغوي','Language'),keys:['speech','conversation'],icon:'💬'},
+    {lbl:L('السلوك','Behavior'),keys:['repetition','rigid','routine'],icon:'🔄'},
+    {lbl:L('التفاعل الاجتماعي','Social'),keys:['play_peers','peers','social_play'],icon:'🤝'},
+    {lbl:L('الحسّي','Sensory'),keys:['sensory','sensory_teen'],icon:'🌟'}
+  ].filter(g=>getIndScore(g.keys)!==null);
+  const hmHtml=hmData.map(g=>{const pct=getIndScore(g.keys);const cls=pct<33?'ok':pct<66?'warn':'alert';const lbl=pct<33?L('طبيعي','Normal'):pct<66?L('يستحق المتابعة','Monitor'):L('يستوجب تقييماً','Evaluate');return '<div class="hm-cell '+cls+'"><span class="hm-icon">'+g.icon+'</span><div class="hm-label">'+g.lbl+'</div><div class="hm-val">'+lbl+'</div></div>';}).join('');
+  
+  document.getElementById('resBody').innerHTML=`
+    ${hmData.length?`<div class="card"><h3>🗺️ ${L('خريطة المهارات','Skills Heatmap')}</h3><p style="font-size:12px;color:var(--muted);margin-bottom:12px">${L('نظرة سريعة على مجالات النمو','Quick overview of developmental areas')}</p><div class="heatmap-grid">${hmHtml}</div></div>`:''}
+    ${indsHtml?`<div class="card"><h3>📊 ${L('المؤشرات التفصيلية','Detailed Indicators')}</h3>${indsHtml}</div>`:''}
+    ${aiSec}
+    ${concerns.length?`<div class="card"><h3>🔍 ${L('المؤشرات التي تستحق الانتباه','Indicators Worth Attention')}</h3>${concerns.slice(0,4).map(i=>`<div class="q-detail concern"><h4>⚠️ ${i.title}: ${i.ans}</h4><p>${i.note} ${i.src?`<em>(${i.src})</em>`:''}</p></div>`).join('')}</div>`:''}
+    ${positives.length?`<div class="card"><h3>💪 ${L('نقاط القوة','Strengths')}</h3>${positives.slice(0,3).map(i=>`<div class="q-detail ok"><h4>✅ ${i.title}: ${i.ans}</h4><p>${L('استجابة إيجابية — مؤشر مطمئن','Positive response — reassuring indicator')}</p></div>`).join('')}</div>`:''}
+    <div class="card"><h3>🏥 ${L('خطة العمل','Action Plan')}</h3>${phasesHtml}</div>
+    <div class="card"><h3>📍 ${L('مراكز متخصصة في الكويت','Specialized Centers in Kuwait')}</h3><p>${L('الخطوة التالية هي التواصل مع جهة متخصصة.','The next step is contacting a specialized center.')}</p><br><button class="btn btn-main" style="padding:13px 28px;font-size:15px" onclick="showScreen('centers')">${L('عرض المراكز ←','View Centers →')}</button></div>
+    <div class="card"><h3>📄 ${L('التقارير','Reports')}</h3><p>${L('احصل على تقرير مطبوع للأهل أو تقرير تقني للطبيب.','Get a report for parents or a technical report for the doctor.')}</p><br><button class="btn btn-outline" style="margin-top:0" onclick="generatePDF()">🖨️ ${L('تقرير للأهل — PDF','Parent Report — PDF')}</button><br><button class="btn btn-outline" style="margin-top:10px;border-color:var(--navy);color:var(--navy)" onclick="generateDoctorPDF()">🏥 ${L('تقرير للطبيب — مختصر تقني','Doctor Report — Technical')}</button></div>
+    <div class="disclaimer"><span>⚠️</span><div>${L('<strong>تنبيه طبي:</strong> نمو أداة فحص مبكر مبنية على M-CHAT-R/F وليست تشخيصاً رسمياً.','<strong>Medical notice:</strong> Numoo is an early screening tool based on M-CHAT-R/F, not an official diagnosis.')}<br><span style="font-size:11px">${L('المرجع: Robins et al., Pediatrics 2014 — PMID: 24366990','Reference: Robins et al., Pediatrics 2014 — PMID: 24366990')}</span></div></div>
+    <button class="btn btn-full btn-dark" onclick="if(confirm(L('إعادة التقييم؟','Restart assessment?'))){currentQ=0;answers={};aiReport='';showScreen('ageSelect')}">🔄 ${L('إعادة التقييم','Restart Assessment')}</button>
+    <button class="btn btn-full btn-teal" onclick="showScreen('progress')">📈 ${L('متابعة التطور','Track Progress')}</button>
+    <button class="btn btn-full btn-teal" style="background:linear-gradient(135deg,#0a9e7a,#077a5e)" onclick="showWeeklyGuide()">📅 ${L('دليل الأسبوع — أنشطة يومية','Weekly Guide — Daily Activities')}</button>
+    <button class="btn btn-full btn-outline" style="margin-top:8px" onclick="showScreen('chatbot')">💬 ${L('اسأل نمو','Ask Numoo')}</button>
+    <button class="btn btn-full btn-ghost" onclick="showScreen('camera')">🎥 ${L('تمارين الكاميرا','Camera Exercises')}</button>`;
+
+  showScreen('results');
+  setTimeout(()=>{document.querySelectorAll('.ind-fill').forEach(b=>{const w=b.style.width;b.style.width='0%';setTimeout(()=>b.style.width=w,120);});},300);
+}
+
+function getNote(id){
+  const notes={ar:{pointing:'غياب الإشارة للمشاركة هو أحد أقوى مؤشرات M-CHAT-R/F',gaze_follow:'صعوبة متابعة الإشارة مؤشر للانتباه المشترك',eyecontact:'التواصل البصري المحدود من أكثر المؤشرات الموثّقة',eye:'التواصل البصري المحدود من أكثر المؤشرات الموثّقة',name_resp:'ضعف الاستجابة للاسم بعد 12 شهراً مؤشر يستحق التقييم',name_call:'ضعف الاستجابة للاسم مؤشر موثّق في M-CHAT-R/F',pretend:'غياب اللعب التخيلي 18-30 شهراً مؤشر مبكر رئيسي',social_play:'ضعف الاستمتاع باللعب الاجتماعي مؤشر مبكر مهم',repetition:'الحركات النمطية المتكررة من معايير DSM-5 (B1)',rigid:'الإصرار الشديد على الروتين من معايير DSM-5 (B2)',rigid_school:'صعوبة التكيّف مع التغيير من معايير DSM-5 (B2)',routine:'التمسك الشديد بالروتين من معايير DSM-5 (B2)',sensory:'الحساسية الحسية من معايير DSM-5 المحدَّثة (B4)',sensory_teen:'الحساسية الحسية من معايير DSM-5 المحدَّثة (B4)',conversation:'صعوبة المحادثة التبادلية مؤشر مهم فوق سن 4',emotions:'محدودية التعاطف مؤشر اجتماعي معتمد',peers:'صعوبة العلاقات الاجتماعية تستحق تقييماً',nonverbal:'صعوبة قراءة الإشارات الاجتماعية مؤشر معتمد',interest_narrow:'الاهتمام المحدود والمكثف من معايير DSM-5 (B3)',special_interest:'الاهتمام المحدود والمكثف من معايير DSM-5 (B3)',interest_teen:'الاهتمام الوسواسي المحدود من معايير DSM-5 (B3)',self_aware:'الشعور بالاختلاف لدى المراهقين مؤشر مهم'},
+    en:{pointing:'Absence of declarative pointing is one of the strongest M-CHAT-R/F indicators',gaze_follow:'Difficulty following a point indicates joint attention issues',eyecontact:'Limited eye contact is one of the most documented autism indicators',eye:'Limited eye contact is one of the most documented autism indicators',name_resp:'Poor name response after 12 months warrants evaluation',name_call:'Poor name response is documented in M-CHAT-R/F',pretend:'Absent pretend play at 18-30 months is a key early indicator',social_play:'Reduced enjoyment of social play is an important early indicator',repetition:'Stereotyped repetitive movements are part of DSM-5 criterion B1',rigid:'Insistence on routines is part of DSM-5 criterion B2',rigid_school:'Difficulty adapting to change is part of DSM-5 criterion B2',routine:'Strong adherence to routine is DSM-5 criterion B2',sensory:'Sensory sensitivity is part of updated DSM-5 criterion B4',sensory_teen:'Sensory sensitivity is part of updated DSM-5 criterion B4',conversation:'Difficulty with reciprocal conversation is a key indicator above age 4',emotions:'Limited empathy is a validated social indicator',peers:'Social relationship difficulties warrant specialist evaluation',nonverbal:'Difficulty reading social cues is a validated indicator',interest_narrow:'Restricted intense interests are DSM-5 criterion B3',special_interest:'Restricted intense interests are DSM-5 criterion B3',interest_teen:'Obsessive restricted interests are DSM-5 criterion B3',self_aware:'Feeling different socially is an important indicator in adolescents'}};
+  return notes[lang][id]||L('هذا المؤشر يستحق النقاش مع متخصص.','This indicator warrants discussion with a specialist.');
+}
+
+
+// ── DOCTOR PDF ──
+function generateDoctorPDF(){
+  const name=answers.name||'Child';
+  const age=answers.age||answers.months||answers.age_y||'—';
+  const risk=calcRisk();
+  const today=new Date().toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'});
+  const ageLbls={toddler:'16-30 months',preschool:'3-5 years',school:'6-12 years',teen:'13-17 years'};
+  const riskMap={low:'LOW RISK — Reassuring indicators',medium:'MODERATE RISK — Warrants follow-up evaluation',high:'HIGH RISK — Urgent specialist evaluation recommended'};
+  const riskColors={low:'#1e9e55',medium:'#d48a00',high:'#c0392b'};
+  const qs=QDB[ageGroup];
+  const concerns=[];
+  qs.forEach(q=>{if(q.type!=='options'||answers[q.id]===undefined)return;const w=RW[q.id]?.[answers[q.id]]||0;if(w>=2){const opts=typeof q.options==='object'&&!Array.isArray(q.options)?q.options['en']:q.options;const title=typeof q.title==='object'?q.title['en']:q.title;concerns.push({title,ans:opts[answers[q.id]],src:q.source||''});}});
+  const concernRows=concerns.map(c=>`<tr><td style="padding:7px 10px;border-bottom:1px solid #eee;font-size:12px">${c.title}</td><td style="padding:7px 10px;border-bottom:1px solid #eee;font-size:12px;font-weight:700;color:#c0392b">${c.ans}</td><td style="padding:7px 10px;border-bottom:1px solid #eee;font-size:11px;color:#666">${c.src}</td></tr>`).join('');
+  const content=`<!DOCTYPE html><html lang="en" dir="ltr"><head><meta charset="UTF-8"><title>Numoo Clinical Report — ${name}</title><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet"><style>body{font-family:'Tajawal',sans-serif;padding:28px;max-width:700px;margin:0 auto;color:#1a2e3b;font-size:13px}.header{border-bottom:3px solid #0ABFBC;padding-bottom:14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:flex-start}.risk-block{padding:12px 18px;border-radius:8px;font-weight:800;font-size:14px;margin:14px 0}table{width:100%;border-collapse:collapse;margin:14px 0}th{background:#0D2137;color:#fff;padding:8px 10px;font-size:12px;text-align:left}.disclaimer{background:#fff8ee;border:1.5px solid #ffd080;padding:12px;border-radius:6px;font-size:11px;color:#6b4f00;margin-top:16px}@media print{@page{margin:18mm}}</style></head><body>
+  <div class="header"><div><div style="font-size:22px;font-weight:900;color:#0D2137">NUMOO — Clinical Screening Report</div><div style="font-size:12px;color:#666;margin-top:4px">Autism Spectrum Disorder Early Screening • M-CHAT-R/F Based</div></div><div style="text-align:right;font-size:12px;color:#666"><div>${today}</div><div>Tool: M-CHAT-R/F (Robins et al., Pediatrics 2014)</div></div></div>
+  <table style="background:#f5f5f5;border-radius:8px;overflow:hidden"><tr><td style="padding:10px"><strong>Patient Name:</strong> ${name}</td><td style="padding:10px"><strong>Age:</strong> ${age} ${ageGroup==='toddler'?'months':'years'}</td><td style="padding:10px"><strong>Age Group:</strong> ${ageLbls[ageGroup]}</td><td style="padding:10px"><strong>Score:</strong> ${scoreData.score}/${scoreData.maxScore} (${scoreData.pct}%)</td></tr></table>
+  <div class="risk-block" style="background:${riskColors[risk]}15;border:2px solid ${riskColors[risk]};color:${riskColors[risk]}">${riskMap[risk]}</div>
+  ${concerns.length?`<h3 style="font-size:14px;margin-bottom:8px">⚠️ Flagged Indicators (Score ≥2/4)</h3><table><thead><tr><th>Domain</th><th>Response</th><th>DSM/M-CHAT Reference</th></tr></thead><tbody>${concernRows}</tbody></table>`:'<p style="color:#1e9e55;font-weight:700">✅ No significant indicators flagged.</p>'}
+  ${aiReport?`<h3 style="font-size:14px;margin-bottom:8px">AI Analysis Summary</h3><div style="background:#f0fdfd;border-left:4px solid #0ABFBC;padding:12px;font-size:12px;line-height:1.7;white-space:pre-wrap">${aiReport}</div>`:''}
+  <div class="disclaimer">⚠️ <strong>Clinical Note:</strong> This report is generated by Numoo, an automated screening tool based on M-CHAT-R/F (PMID: 24366990) and AQ-Adolescent scales. It is NOT a clinical diagnosis. Formal diagnosis requires comprehensive evaluation by a qualified multidisciplinary team. For referrals in Kuwait: Kuwait Center for Autism +965-25309300 | General Authority for Persons with Disabilities 1811123.</div>
+  <script>window.onload=function(){window.print();}<\/script></body></html>`;
+  try{const win=window.open('','_blank','width=780,height=920');if(!win){showToast('⚠️ السماح بالنوافذ المنبثقة');return;}win.document.write(content);win.document.close();}catch(e){showToast('⚠️ فعّل النوافذ المنبثقة');}
+}
+
+// ── PDF ──
+function generatePDF(){
+  const name=answers.name||L('الطفل','Child');
+  const age=answers.age||answers.months||answers.age_y||'—';
+  const risk=calcRisk();
+  const ageLbls={toddler:L('16-30 شهراً','16-30 months'),preschool:L('3-5 سنوات','3-5 years'),school:L('6-12 سنة','6-12 years'),teen:L('13-17 سنة','13-17 years')};
+  const riskLbls={low:L('منخفض — مؤشرات مطمئنة','Low — reassuring indicators'),medium:L('متوسط — يستحق المتابعة','Medium — warrants follow-up'),high:L('مرتفع — يستوجب تقييماً عاجلاً','High — urgent evaluation needed')};
+  const riskColors={low:'#1e9e55',medium:'#d48a00',high:'#c0392b'};
+  const today=new Date().toLocaleDateString(lang==='ar'?'ar-KW':'en-GB',{year:'numeric',month:'long',day:'numeric'});
+  const qs=QDB[ageGroup];
+  const rows=qs.filter(q=>q.type==='options'&&answers[q.id]!==undefined).map(q=>{
+    const opts=typeof q.options==='object'&&!Array.isArray(q.options)?q.options['ar']:q.options;
+    const title=typeof q.title==='object'?q.title['ar']:q.title;
+    return `<tr><td style="padding:8px 12px;border-bottom:1px solid #e0ecec;font-size:13px;color:#4a6a7a;width:40%">${title}</td><td style="padding:8px 12px;border-bottom:1px solid #e0ecec;font-size:13px;font-weight:700;color:#1a2e3b">${opts[answers[q.id]]||'—'}</td><td style="padding:8px 12px;border-bottom:1px solid #e0ecec;font-size:11px;color:#089b98">${q.source||''}</td></tr>`;
+  }).join('');
+  const aiSect=aiReport?`<div style="margin-top:20px;padding:16px;background:#f0fdfd;border-radius:12px;border-right:4px solid #0ABFBC"><div style="font-size:13px;font-weight:800;color:#089b98;margin-bottom:10px">${L('تحليل Claude AI:','Claude AI Analysis:')}</div><div style="font-size:13px;line-height:1.85;color:#1a2e3b;white-space:pre-wrap">${aiReport}</div></div>`:'';
+  const content=`<!DOCTYPE html><html lang="${lang}" dir="${lang==='ar'?'rtl':'ltr'}"><head><meta charset="UTF-8"><title>${L('تقرير نمو','Numoo Report')} — ${name}</title><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet"><style>body{font-family:'Tajawal',sans-serif;padding:32px;max-width:680px;margin:0 auto;color:#1a2e3b;line-height:1.6}h1{text-align:center;font-size:24px;color:#0D2137;margin-bottom:4px}.subtitle{text-align:center;font-size:13px;color:#4a6a7a;margin-bottom:24px}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}.info-box{background:#F4FAFA;border-radius:12px;padding:14px;text-align:center}.lbl{font-size:11px;color:#4a6a7a;margin-bottom:4px}.val{font-size:15px;font-weight:800;color:#0D2137}.risk-box{background:${riskColors[risk]}18;border:2px solid ${riskColors[risk]};border-radius:12px;padding:16px;text-align:center;margin-bottom:24px}.risk-label{font-size:18px;font-weight:800;color:${riskColors[risk]}}.risk-sub{font-size:13px;color:#4a6a7a;margin-top:4px}table{width:100%;border-collapse:collapse;margin-bottom:20px}th{background:#0D2137;color:#fff;padding:10px 12px;font-size:13px;text-align:right}.disclaimer{background:#fff8ee;border:1.5px solid #ffe0a0;border-radius:10px;padding:14px;font-size:12px;color:#6b4f00;line-height:1.7;margin-top:20px}.footer{text-align:center;font-size:11px;color:#aaa;margin-top:24px;padding-top:16px;border-top:1px solid #e0ecec}@media print{@page{margin:20mm}}</style></head><body>
+  <div style="text-align:center;margin-bottom:20px"><div style="width:60px;height:60px;background:linear-gradient(135deg,#0ABFBC,#089b98);border-radius:16px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:28px">🌱</div><h1>${L('نمو — تقرير الفحص المبكر','Numoo — Early Screening Report')}</h1><div class="subtitle">${L('تاريخ التقييم','Assessment date')}: ${today} | M-CHAT-R/F</div></div>
+  <div class="info-grid"><div class="info-box"><div class="lbl">${L('اسم الطفل',"Child's Name")}</div><div class="val">${name}</div></div><div class="info-box"><div class="lbl">${L('العمر','Age')}</div><div class="val">${age} ${ageGroup==='toddler'?L('شهراً','months'):L('سنة','years')}</div></div><div class="info-box"><div class="lbl">${L('الفئة العمرية','Age Group')}</div><div class="val">${ageLbls[ageGroup]}</div></div><div class="info-box"><div class="lbl">${L('الدرجة','Score')}</div><div class="val">${scoreData.score}/${scoreData.maxScore} (${scoreData.pct}%)</div></div></div>
+  <div class="risk-box"><div class="risk-label">${riskLbls[risk]}</div><div class="risk-sub">M-CHAT-R/F — ${L('استرشادية وليست تشخيصاً طبياً','indicative, not a medical diagnosis')}</div></div>
+  <table><thead><tr><th>${L('المحور','Domain')}</th><th>${L('الإجابة','Answer')}</th><th>${L('المصدر','Source')}</th></tr></thead><tbody>${rows}</tbody></table>
+  ${aiSect}
+  <div class="disclaimer">⚠️ <strong>${L('تنبيه طبي:','Medical notice:')}</strong> ${L('هذا التقرير أداة فحص توعوية مبنية على M-CHAT-R/F (Robins et al., Pediatrics 2014 — PMID: 24366990) ولا يُشكّل تشخيصاً طبياً رسمياً.','This report is an awareness screening tool based on M-CHAT-R/F (Robins et al., Pediatrics 2014 — PMID: 24366990) and does not constitute an official medical diagnosis.')}</div>
+  <div class="footer">© 2025 Numoo App — ${L('جميع الحقوق محفوظة','All Rights Reserved')}</div>
+  <script>window.onload=function(){window.print();}<\/script></body></html>`;
+  try{
+    const win=window.open('','_blank','width=750,height=900');
+    if(!win){showToast(L('⚠️ يُرجى السماح بالنوافذ المنبثقة في المتصفح','⚠️ Please allow pop-ups in your browser'));return;}
+    win.document.write(content);win.document.close();
+  }catch(e){showToast(L('⚠️ فعّل النوافذ المنبثقة لإنشاء التقرير','⚠️ Enable pop-ups to generate the report'));}
+}
+
+// ══════════════════════════════
+// CAMERA AI FEATURE
+// ══════════════════════════════
+let cameraStream=null,selectedTask=-1,sessionTimer=null,sessionSeconds=0;
+
+const TASKS=[
+  {name:{ar:'التواصل البصري',en:'Eye Contact'},duration:30,
+    instructions:{ar:['اجلس أمام الطفل على مستوى عينيه','ابتسم وانظر في عينيه','انتظر حتى يرفع بصره نحوك','عندما يحدث: قل اسمه بدفء وابتسم'],en:['Sit in front of the child at eye level','Smile and look into their eyes','Wait for them to look up at you','When it happens: say their name warmly and smile']},
+    ai:{ar:['لاحظ هل يرفع بصره تلقائياً خلال 5 ثوانٍ','الاتصال البصري لثانية واحدة على الأقل هو الهدف','إذا نظر: عزّز فوراً بالابتسام والكلام','إذا لم ينظر: حرّك لعبة صغيرة عند مستوى عينيك'],en:['Notice if they look up spontaneously within 5 seconds','At least 1 second of eye contact is the goal','If they look: reinforce immediately with smile and speech','If they do not look: move a small toy near your eye level']},
+    tips:{ar:'المفتاح هو الانتظار الصبور. لا تجبره على النظر.',en:'The key is patient waiting. Never force eye contact.'}},
+  {name:{ar:'الاستجابة للاسم',en:'Name Response'},duration:30,
+    instructions:{ar:['ابتعد بمسافة 2 متر عن الطفل','تأكد من عدم وجود ضوضاء','نادِ الاسم بنبرة عادية مرة واحدة فقط','انتظر 5 ثوانٍ قبل التكرار'],en:['Stand 2 meters away from the child','Ensure no background noise','Call the name in a normal tone once only','Wait 5 seconds before repeating']},
+    ai:{ar:['المؤشر الإيجابي: يلتفت خلال 5 ثوانٍ','المؤشر المتوسط: يلتفت بعد التكرار','المؤشر الضعيف: لا يستجيب حتى بعد 3 مرات','جرّب في أوقات مختلفة من اليوم'],en:['Positive indicator: turns within 5 seconds','Medium indicator: turns after repetition','Weak indicator: no response after 3 times','Try at different times of day']},
+    tips:{ar:'لا تناده لما يكون مشغولاً بشيء رئيسي — اختر وقت هدوء.',en:'Do not call when occupied with something important — choose a calm moment.'}},
+  {name:{ar:'تمرين الإشارة',en:'Pointing Exercise'},duration:45,
+    instructions:{ar:['أشر بإصبعك نحو شيء بعيد (صورة، نافذة)','قل: "شوف! شوف الـ..."','راقب هل ينظر إلى الشيء أم فقط لإصبعك','اجعله ممتعاً وليس اختباراً'],en:['Point your finger at something distant (picture, window)','Say: "Look! Look at the..."','Watch if they look at the object or just at your finger','Make it fun, not a test']},
+    ai:{ar:['الهدف: ينتقل بصره من إصبعك للشيء','إذا نظر للشيء: ممتاز — الانتباه المشترك يعمل','إذا نظر لإصبعك فقط: تمرين طبيعي يحتاج تكراراً','جرّب أشياء مثيرة مثل طيارة أو كلب خارج النافذة'],en:['Goal: gaze shifts from your finger to the object','If they look at the object: excellent — joint attention works','If they only look at your finger: normal exercise needing repetition','Try exciting things like planes or dogs outside the window']},
+    tips:{ar:'الانتباه المشترك أساس اللغة والتواصل الاجتماعي.',en:'Joint attention is the foundation of language and social communication.'}},
+  {name:{ar:'اللعب التخيلي',en:'Pretend Play'},duration:60,
+    instructions:{ar:['ابدأ باللعب بدمية أو كوب فارغ','مثّل أنك تشرب قهوة أو تطعم الدمية','اترك مساحة للطفل يقلّدك','إذا قلّد: عزّز وكمّل معه'],en:['Start playing with a doll or empty cup','Pretend to drink coffee or feed the doll','Leave space for the child to imitate you','If they imitate: reinforce and continue together']},
+    ai:{ar:['اللعب التخيلي يبدأ في 18 شهر تقريباً','إذا قلّد: ممتاز — نعمة للتطور اللغوي والاجتماعي','إذا لم يقلّد: اجعل الفعل واضحاً وممتعاً جداً','الصوت والمبالغة تساعد: "يمّ يمّ، طعام لذيذ!"'],en:['Pretend play typically begins around 18 months','If they imitate: excellent — great for language and social development','If they do not imitate: make the action very clear and fun','Sound and exaggeration help: "Yum yum, delicious food!"']},
+    tips:{ar:'لا تتوقع تقليداً فورياً — بعض الأطفال يحتاجون عدة جلسات.',en:'Do not expect immediate imitation — some children need multiple sessions.'}}
+];
+
+function selectTask(idx,el){
+  selectedTask=idx;
+  document.querySelectorAll('.task-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const task=TASKS[idx];
+  const name=typeof task.name==='object'?task.name[lang]:task.name;
+  document.getElementById('camBadge').textContent=`✓ ${name} — ${task.duration} ${STRINGS[lang].timerLabel}`;
+  document.getElementById('camOverlayTxt').textContent=STRINGS[lang].camOverlayTxt;
+  document.getElementById('camStartBtn').disabled=false;
+  // Show instructions
+  const instrCard=document.getElementById('parentInstructions');
+  instrCard.style.display='block';
+  document.getElementById('instrH').textContent=STRINGS[lang].instrH;
+  const steps=(typeof task.instructions==='object'&&!Array.isArray(task.instructions)?task.instructions[lang]:task.instructions);
+  document.getElementById('instrBody').innerHTML=steps.map((s,i)=>`<div style="display:flex;gap:10px;margin-bottom:10px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0">${i+1}</div><div style="font-size:14px;color:var(--text);line-height:1.7">${s}</div></div>`).join('');
+  // Show AI guidance
+  const aiTips=(typeof task.ai==='object'&&!Array.isArray(task.ai)?task.ai[lang]:task.ai);
+  document.getElementById('aiFeedH').textContent=`🤖 ${STRINGS[lang].aiFeedH.replace('🤖 ','')}`;
+  document.getElementById('aiFeedTxt').innerHTML=aiTips.map(t=>`<div style="display:flex;gap:8px;margin-bottom:8px;font-size:13px;color:var(--text);line-height:1.7"><span style="color:var(--teal);flex-shrink:0">●</span>${t}</div>`).join('');
+}
+
+async function startCameraSession(){
+  if(selectedTask<0){showToast(L('⚠️ اختر تمريناً أولاً','⚠️ Choose an exercise first'));return;}
+  try{
+    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
+    const vid=document.getElementById('cameraFeed');
+    vid.srcObject=cameraStream;vid.style.display='block';
+    document.getElementById('camOverlay').style.display='none';
+    document.getElementById('camStartBtn').style.display='none';
+    document.getElementById('camStopBtn').style.display='block';
+    document.getElementById('timerBox').style.display='block';
+    sessionSeconds=0;
+    const task=TASKS[selectedTask];
+    const dur=task.duration;
+    sessionTimer=setInterval(()=>{
+      sessionSeconds++;
+      document.getElementById('timerCount').textContent=sessionSeconds;
+      if(sessionSeconds>=dur){stopCameraSession();showTaskComplete();}
+    },1000);
+    // Start AI analysis after 5 seconds
+    setTimeout(()=>showLiveAI(),5000);
+  }catch(e){showToast(L('⚠️ لا يمكن الوصول للكاميرا. تأكد من منح الإذن.','⚠️ Cannot access camera. Please grant permission.'));}
+}
+
+function stopCameraSession(){
+  if(sessionTimer){clearInterval(sessionTimer);sessionTimer=null;}
+  if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;}
+  const vid=document.getElementById('cameraFeed');
+  vid.style.display='none';vid.srcObject=null;
+  document.getElementById('camOverlay').style.display='flex';
+  document.getElementById('camStartBtn').style.display='block';
+  document.getElementById('camStopBtn').style.display='none';
+  document.getElementById('timerBox').style.display='none';
+}
+
+function stopCamera(){stopCameraSession();}
+
+function showLiveAI(){
+  if(!cameraStream||selectedTask<0)return;
+  const task=TASKS[selectedTask];
+  const tips=(typeof task.tips==='object'?task.tips[lang]:task.tips);
+  const feedback=document.getElementById('aiFeedTxt');
+  feedback.innerHTML+=`<div style="margin-top:12px;padding:12px;background:var(--teal-xl);border-radius:10px;border-right:3px solid var(--teal);font-size:13px;color:var(--text-d,var(--teal-d));line-height:1.7">💡 <strong>${L('نصيحة نمو:','Numoo tip:')}</strong> ${tips}</div>`;
+}
+
+function showTaskComplete(){
+  const task=TASKS[selectedTask];
+  const name=typeof task.name==='object'?task.name[lang]:task.name;
+  showToast(L(`✅ انتهت جلسة "${name}". أحسنت!`,`✅ "${name}" session complete. Well done!`));
+  const feedEl=document.getElementById('aiFeedTxt');
+  feedEl.innerHTML+=`<div style="margin-top:12px;padding:14px;background:#e8fff0;border-radius:10px;border-right:3px solid var(--green);font-size:14px;font-weight:700;color:var(--green);line-height:1.7">✅ ${L('انتهت الجلسة!','Session complete!')} <span id="aiCamAnalysis">${L('جاري تحليل الجلسة بالذكاء الاصطناعي...','Analyzing session with AI...')}</span></div>`;
+  analyzeCameraSession(task, name);
+}
+
+async function analyzeCameraSession(task, sessionName){
+  const taskInstr = (typeof task.instructions==='object'&&!Array.isArray(task.instructions)?task.instructions[lang]:task.instructions).join(', ');
+  const childName = answers.name||L('الطفل','the child');
+  try{
+    const res = await fetch('/.netlify/functions/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:600,
+        messages:[{role:'user',content:`أنت متخصص في التوحد. انتهى الأهل من جلسة "${sessionName}" لطفلهم (${childName}). التعليمات كانت: ${taskInstr}. 
+اكتب بالعربي الكويتي (٣-٤ أسطر):
+١. ماذا يلاحظ الأهل في هذا التمرين
+٢. علامات إيجابية يبحثون عنها  
+٣. الخطوة التالية لو ما لاحظوا التحسّن
+اجعل الجواب عملياً وبسيطاً للأهل.`}]
+      })
+    });
+    const d=await res.json();
+    const reply=d.content?.[0]?.text||'';
+    const el=document.getElementById('aiCamAnalysis');
+    if(el) el.innerHTML='<br><br>🤖 '+reply.split('\n').join('<br>');
+  }catch(e){
+    const el=document.getElementById('aiCamAnalysis');
+    if(el) el.textContent=L('سجّل ملاحظاتك عن استجابة الطفل.','Note your observations about the child response.');
+  }
+}
+
+// ── UTILS ──
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+
+// ══════════════════════════════
+// MODE SYSTEM (Parent / Teacher)
+// ══════════════════════════════
+let appMode = 'parent';
+function setMode(m){
+  appMode = m;
+  document.getElementById('modeParent').classList.toggle('active', m==='parent');
+  document.getElementById('modeTeacher').classList.toggle('active', m==='teacher');
+  document.getElementById('teacherBadge').style.display = m==='teacher'?'inline-flex':'none';
+  if(m==='teacher'){
+    showToast('🏫 وضع المعلم: التقييم مناسب للطلاب في الفصل');
+    document.getElementById('splashTag').innerHTML = 'أداة للمعلمين<br>لرصد مؤشرات الاحتياجات الخاصة مبكراً';
+  } else {
+    document.getElementById('splashTag').innerHTML = 'الكشف المبكر لمؤشرات اضطراب طيف التوحد<br>وتحويل القلق إلى خطوات واضحة';
+  }
+}
+
+// ══════════════════════════════
+// ANXIETY INDICATOR
+// ══════════════════════════════
+let parentAnxiety = 0;
+function setAnxiety(level, el){
+  parentAnxiety = level;
+  document.querySelectorAll('.anxiety-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  const msgs = {
+    1: '😌 ممتاز! قلقك منخفض — الفحص المبكر خطوة وقائية رائعة.',
+    2: '🤔 قليل من القلق طبيعي جداً. التقييم سيوضح الصورة.',
+    3: '😟 نفهم قلقك. نمو سيعطيك إجابات واضحة وخطوات عملية.',
+    4: '😰 قلقك مفهوم. سنحلل كل مؤشر بدقة ونوجهك للخطوة الصح.',
+    5: '😱 نحن معك. هذا التقييم الخطوة الأولى نحو الوضوح والدعم.'
+  };
+  const r = document.getElementById('anxietyResult');
+  r.style.display = 'block';
+  r.textContent = msgs[level];
+}
+
+// ══════════════════════════════
+// CHATBOT — اسأل نمو
+// ══════════════════════════════
+let chatHistory = [];
+
+const FAQ = [
+  {
+    keys:['علامات','أعراض','مؤشر','كيف أعرف','شنو علامات'],
+    q:'شنو علامات التوحد؟',
+    a:`علامات التوحد تختلف حسب العمر، لكن أبرزها:
+
+👁️ <b>التواصل البصري:</b> ما ينظر بعيونك لما تكلمه
+👋 <b>الاستجابة للاسم:</b> ما يرد لما تناديه بعد ١٢ شهر
+👆 <b>الإشارة:</b> ما يشير لأشياء يبي يريك إياها
+🗣️ <b>اللغة:</b> تأخر في الكلام أو فقدان كلمات كان يقولها
+🔄 <b>الحركات المتكررة:</b> مثل ترديد حركة أو صوت بشكل متكرر
+
+⚠️ وجود مؤشر أو اثنين لا يعني تشخيصاً — نمو يساعدك تقيّم الوضع بدقة.`
+  },
+  {
+    keys:['متى','طبيب','أروح','متخصص','موعد','أحجز'],
+    q:'متى أروح للطبيب؟',
+    a:`روح للطبيب أو متخصص فوراً إذا لاحظت:
+
+🔴 ما يقول أي كلمة بعمر ١٦ شهر
+🔴 ما يقول كلمتين مع بعض بعمر ٢٤ شهر
+🔴 فقد كلمات كان يقولها قبل
+🔴 ما يستجيب لاسمه بشكل مستمر
+🔴 نتيجة نمو جاءت "مرتفعة"
+
+📞 <b>مركز الكويت للتوحد:</b> 25309300
+📞 <b>الهيئة العامة لذوي الإعاقة:</b> 1811123
+
+💡 التدخل المبكر قبل سن ٣ يحسن النتائج بشكل كبير جداً.`
+  },
+  {
+    keys:['بالبيت','أساعد','نشاط','تمرين','أسوي','أعمل'],
+    q:'كيف أساعد طفلي بالبيت؟',
+    a:`٥ أشياء تقدر تسويها اليوم:
+
+👁️ <b>التواصل البصري:</b> اجلس على مستوى عينيه وابتسم — ٥ دقائق يومياً
+👋 <b>الاسم:</b> ناده من ٢ متر بنبرة عادية، انتظر ٥ ثواني
+👆 <b>الإشارة:</b> أشر لأشياء مثيرة وقل "شوف!" وراقب نظرته
+🎭 <b>اللعب التخيلي:</b> مثّل إنك تشرب قهوة — دعه يقلدك
+📖 <b>القراءة:</b> كتب مصورة — أشر للصور وسمّها
+
+💡 ٥-١٠ دقائق يومياً أفضل من ساعة مرة بالأسبوع.`
+  },
+  {
+    keys:['M-CHAT','mchat','ام شات','أداة','اختبار','فحص','معيار'],
+    q:'شنو M-CHAT-R/F؟',
+    a:`M-CHAT-R/F هي <b>قائمة الفحص المعدّلة للتوحد</b> — الأداة الأكثر استخداماً عالمياً للكشف المبكر.
+
+📊 <b>الأرقام:</b>
+• وُثّقت في دراسة على ١٦,٠٧١ طفل
+• حساسيتها ٨٥٪ في اكتشاف التوحد
+• توصي بها الأكاديمية الأمريكية لطب الأطفال
+
+✅ <b>تُستخدم عند:</b> ١٨ شهر و٢٤ شهر بشكل دوري
+
+🌱 نمو يستخدم هذا المعيار + معايير DSM-5 لتغطية كل الأعمار حتى ١٧ سنة.`
+  },
+  {
+    keys:['مراكز','كويت','مركز','عنوان','رقم','توحد','جمعية','هيئة'],
+    q:'أفضل مراكز الكويت',
+    a:`مراكز التوحد في الكويت:
+
+🌟 <b>مركز الكويت للتوحد</b>
+📍 مشرف الغربي | 📞 25309300
+أول مركز بالشرق الأوسط ١٩٩٤ — حكومي معتمد
+
+🏛️ <b>الهيئة العامة لذوي الإعاقة</b>
+📍 حولي، شارع بيروت | 📞 1811123
+الجهة الحكومية الرئيسية
+
+💙 <b>جمعية الكويت للتوحد</b>
+دعم الأهالي والإرشاد | ksautism@gmail.com
+
+🤝 <b>Autism Partnership Kuwait</b>
+برامج ABA | autismpartnership.com.kw`
+  },
+  {
+    keys:['فرق','اختلاف','تأخر','طبيعي','عادي','زين','بخير'],
+    q:'الفرق بين تأخر الكلام والتوحد؟',
+    a:`سؤال مهم جداً! الفرق الرئيسي:
+
+🗣️ <b>تأخر الكلام فقط:</b>
+• التواصل البصري طبيعي ✅
+• يستجيب لاسمه ✅
+• يشير ويتفاعل اجتماعياً ✅
+• الكلام متأخر بس بقية المهارات طبيعية
+
+🔄 <b>التوحد:</b>
+• صعوبة في التواصل البصري
+• ضعف الاستجابة للاسم
+• محدودية الإشارة والتفاعل الاجتماعي
+• قد يكون الكلام طبيعياً أو متأخراً
+
+💡 أفضل طريقة للتفريق: التقييم المتكامل مع متخصص.`
+  },
+  {
+    keys:['كم تكلف','سعر','مجاني','تكلفة','مصاريف'],
+    q:'هل التقييم مجاني؟',
+    a:`نعم! <b>نمو مجاني ١٠٠٪</b> 🎉
+
+بالنسبة للمراكز:
+🏛️ مركز الكويت للتوحد — حكومي ورسوم رمزية
+🏛️ الهيئة العامة — حكومي ومجاني للمواطنين
+💙 جمعية الكويت للتوحد — تطوعية وأسعار مدعومة
+🤝 Autism Partnership — خاص (تكاليف أعلى لكن خبرة عالية)
+
+💡 ابدأ بالمراكز الحكومية، عادةً تحيل للخدمات المناسبة مجاناً.`
+  },
+  {
+    keys:['مراهق','كبير','سنة','١٣','١٤','١٥','١٦','١٧','teen'],
+    q:'طفلي مراهق، هل ينطبق عليه؟',
+    a:`نعم! التوحد يُكتشف أحياناً في مرحلة المراهقة، خصوصاً الحالات الخفيفة.
+
+علامات تستحق الانتباه عند المراهقين:
+😶 صعوبة في فهم "القواعد الاجتماعية غير المعلنة"
+🎯 اهتمام شديد جداً بموضوع واحد محدد
+💬 صعوبة في المحادثة الطبيعية التبادلية
+👥 يفضل الوحدة بشكل واضح على التفاعل
+🌟 حساسية شديدة للأصوات أو الأضواء أو الملمس
+
+🌱 نمو عنده قسم خاص للمراهقين ١٣-١٧ سنة بمعايير AQ.`
+  },
+  {
+    keys:['ABA','تدخل','علاج','جلسات','برنامج'],
+    q:'شنو هو ABA وهل يفيد؟',
+    a:`ABA (Applied Behavior Analysis) هو <b>تحليل السلوك التطبيقي</b> — أكثر طريقة علاجية موثّقة علمياً للتوحد.
+
+✅ <b>ماذا يفعل:</b>
+• يطوّر مهارات التواصل والاستقلالية
+• يقلّل السلوكيات الصعبة
+• يبني مهارات اجتماعية وأكاديمية
+
+📊 الأبحاث تثبت أن ٢٠-٤٠ ساعة أسبوعياً من ABA المبكر تحدث فرقاً كبيراً
+
+📍 في الكويت: Autism Partnership Kuwait متخصصة بـ ABA
+🌐 autismpartnership.com.kw`
+  },
+  {
+    keys:['قلق','خايف','خوف','مو عارف','ماذا أفعل','وش أسوي'],
+    q:'أنا قلقان على طفلي، شنو أسوي؟',
+    a:`قلقك طبيعي وهو دليل على اهتمامك 💙
+
+<b>خطوات واضحة الحين:</b>
+
+1️⃣ <b>أكمل التقييم في نمو</b> — يعطيك صورة واضحة (٣-٥ دقائق)
+2️⃣ <b>سجّل ملاحظاتك</b> — صوّر سلوكيات تلفت انتباهك
+3️⃣ <b>تكلم مع طبيب الأسرة</b> — وضح قلقك وأرجع للتقرير
+4️⃣ <b>لو النتيجة مرتفعة</b> — اتصل بمركز الكويت للتوحد: 25309300
+
+💡 تذكر: التدخل المبكر يصنع فرقاً كبيراً. القلق + الحركة = أفضل هدية لطفلك.`
+  }
+];
+
+function findAnswer(msg){
+  const lowerMsg = msg.toLowerCase().replace(/\s+/g,' ');
+  let bestMatch = null;
+  let bestScore = 0;
+  
+  for(const faq of FAQ){
+    let score = 0;
+    for(const kw of faq.keys){
+      if(lowerMsg.includes(kw.toLowerCase())) score++;
+    }
+    if(score > bestScore){
+      bestScore = score;
+      bestMatch = faq;
+    }
+  }
+  
+  if(bestMatch && bestScore > 0) return bestMatch.a;
+  
+  // Generic fallback
+  return `شكراً على سؤالك! 💙
+
+ما عندي إجابة محددة لهذا السؤال، لكن أقدر أساعدك في:
+
+• <b>علامات التوحد</b> — اكتب "علامات"
+• <b>متى أروح للطبيب</b> — اكتب "طبيب"
+• <b>أنشطة بالبيت</b> — اكتب "بالبيت"
+• <b>مراكز الكويت</b> — اكتب "مراكز"
+• <b>الفرق بين التأخر والتوحد</b> — اكتب "فرق"
+
+أو يمكنك <b>إكمال تقييم نمو</b> للحصول على تقرير مخصص لطفلك! 🌱`;
+}
+
+function sendQuickMsg(text){
+  document.getElementById('chatInput').value = text;
+  sendChatMsg();
+}
+
+async function sendChatMsg(){
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+  input.value = '';
+
+  const msgs = document.getElementById('chatMessages');
+  msgs.innerHTML += '<div class="chat-bubble user">'+msg+'</div>';
+  msgs.innerHTML += '<div class="chat-bubble bot typing" id="typingBubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
+  msgs.scrollTop = msgs.scrollHeight;
+
+  chatHistory.push({role:'user', content: msg});
+
+  try {
+    const res = await fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({messages: chatHistory})
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || findAnswer(msg);
+    chatHistory.push({role:'assistant', content: reply});
+    const tb = document.getElementById('typingBubble');
+    if(tb) tb.outerHTML = '<div class="chat-bubble bot">'+reply.split('\n').join('<br>')+'</div>';
+    msgs.scrollTop = msgs.scrollHeight;
+  } catch(e){
+    const answer = findAnswer(msg);
+    const tb = document.getElementById('typingBubble');
+    if(tb) tb.outerHTML = '<div class="chat-bubble bot">'+answer.split('\n').join('<br>')+'</div>';
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+}
+
+// ══════════════════════════════
+// WEEKLY GUIDE — دليل الأسبوع
+// ══════════════════════════════
+function showWeeklyGuide(){
+  const risk = calcRisk();
+  const name = answers.name || 'طفلك';
+  const savedDays = JSON.parse(localStorage.getItem('numuw_weekdays')||'{}');
+
+  const actsByRisk = {
+    low: [
+      {day:'الأحد',icon:'👁️',act:'٥ دقائق تواصل بصري أثناء اللعب — ابتسم وانتظر نظرته'},
+      {day:'الاثنين',icon:'📖',act:'اقرأ قصة قصيرة وأشر للصور — "شوف الـ..."'},
+      {day:'الثلاثاء',icon:'🎵',act:'غنّ أغنية بسيطة مع الإشارة — يطور التواصل'},
+      {day:'الأربعاء',icon:'🧩',act:'لعبة التناوب — دورك ودوره بالتناوب'},
+      {day:'الخميس',icon:'👋',act:'تدريب الاستجابة للاسم — نادِه من مسافة ٢ متر'},
+      {day:'الجمعة',icon:'🏃',act:'نشاط حركي خارجي — يطور التنسيق'},
+      {day:'السبت',icon:'📝',act:'سجّل ملاحظة واحدة عن تطوره هذا الأسبوع'}
+    ],
+    medium: [
+      {day:'الأحد',icon:'👁️',act:'تمرين التواصل البصري ١٠ دقائق — عند مستوى عينيه'},
+      {day:'الاثنين',icon:'👋',act:'تدريب الاسم ٣ مرات بفترات مختلفة من اليوم'},
+      {day:'الثلاثاء',icon:'👆',act:'تمرين الإشارة — أشر لأشياء مثيرة وراقب نظرته'},
+      {day:'الأربعاء',icon:'🎭',act:'اللعب التخيلي ١٠ دقائق — قلّد الدمية ودعه يقلّد'},
+      {day:'الخميس',icon:'📞',act:'تواصل مع مختص أو احجز موعداً'},
+      {day:'الجمعة',icon:'📹',act:'سجّل ٣٠ ثانية من سلوكه لتريها للطبيب'},
+      {day:'السبت',icon:'📝',act:'قيّم التطور هذا الأسبوع وأضف ملاحظة'}
+    ],
+    high: [
+      {day:'الأحد',icon:'📞',act:'اتصل بمركز الكويت للتوحد: 25309300 — احجز موعداً'},
+      {day:'الاثنين',icon:'👁️',act:'تمرين التواصل البصري — ١٥ دقيقة هادئة'},
+      {day:'الثلاثاء',icon:'📹',act:'سجّل السلوكيات للطبيب — التواصل البصري والاستجابة'},
+      {day:'الأربعاء',icon:'🤝',act:'انضم لمجموعة دعم الأهل في الكويت للتوحد'},
+      {day:'الخميس',icon:'🖨️',act:'اطبع التقرير وجهّزه للموعد'},
+      {day:'الجمعة',icon:'🎭',act:'جلسة لعب تخيلي مع تعزيز إيجابي'},
+      {day:'السبت',icon:'📝',act:'سجّل التطور والاستجابة للأنشطة هذا الأسبوع'}
+    ]
+  };
+
+  const acts = actsByRisk[risk] || actsByRisk.medium;
+  const daysHtml = acts.map((a,i)=>{
+    const done = savedDays[i] ? 'done' : '';
+    return `<div class="week-day"><div class="day-circle ${done}">${a.day.substring(0,1)}</div><div class="day-txt"><strong>${a.day}:</strong> ${a.icon} ${a.act}</div><div class="day-check ${done}" onclick="toggleDay(${i},this)">✓</div></div>`;
+  }).join('');
+
+  document.getElementById('weeklyBody').innerHTML = `
+    <div class="prog-summary" style="margin-bottom:14px">
+      <h3 style="font-size:16px;margin-bottom:6px">🌱 أسبوع ${name}</h3>
+      <div style="font-size:13px;color:rgba(255,255,255,.8)">خطة مخصصة حسب نتيجة التقييم</div>
+    </div>
+    <div class="week-activity">${daysHtml}</div>
+    <div class="card" style="background:var(--teal-xl);border:1px solid var(--teal-l)">
+      <h3 style="color:var(--teal-d)">💡 نصيحة الأسبوع</h3>
+      <p style="font-size:13px;color:var(--muted)">${risk==='high'?'التدخل المبكر يصنع الفرق. كل يوم تمارس فيه النشاط هو استثمار في مستقبل طفلك.':risk==='medium'?'الانتظام هو المفتاح — ٥ دقائق يومياً أفضل من ساعة مرة بالأسبوع.':'طفلك يتطور بشكل طبيعي. استمر بالتحفيز والدعم الإيجابي.'}</p>
+    </div>
+    <button class="btn btn-full btn-ghost" onclick="showScreen('results')">← العودة للنتيجة</button>`;
+
+  showScreen('weeklyGuide');
+}
+
+function toggleDay(i, el){
+  const saved = JSON.parse(localStorage.getItem('numuw_weekdays')||'{}');
+  saved[i] = !saved[i];
+  localStorage.setItem('numuw_weekdays', JSON.stringify(saved));
+  el.classList.toggle('done');
+  el.closest('.week-day').querySelector('.day-circle').classList.toggle('done');
+  if(saved[i]) showToast('✅ أحسنت! نشاط اليوم مكتمل');
+}
+
+// ══════════════════════════════
+// REAL PROGRESS TRACKER
+// ══════════════════════════════
+function showRealProgress(){
+  const entries = JSON.parse(localStorage.getItem('numuw_progress_log')||'[]');
+  const name = answers.name || 'الطفل';
+
+  const entriesHtml = entries.length ? entries.slice(-5).reverse().map((e,i)=>`
+    <div class="tl-item">
+      <div class="tl-dot ${e.mood==='great'?'g':'y'}"></div>
+      <div class="tl-content">
+        <h4>${e.date}</h4>
+        <p>${e.note}</p>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tl-note">التواصل البصري: ${e.eye}/5</span>
+          <span class="tl-note">الاستجابة: ${e.resp}/5</span>
+          <span class="tl-note">التفاعل: ${e.inter}/5</span>
+        </div>
+      </div>
+    </div>`).join('') : `<p style="color:var(--muted);font-size:14px;text-align:center;padding:20px">لا يوجد تسجيلات بعد. أضف أول تقدم! 🌱</p>`;
+
+  const avgEye = entries.length ? Math.round(entries.reduce((s,e)=>s+e.eye,0)/entries.length*20) : 0;
+  const avgResp = entries.length ? Math.round(entries.reduce((s,e)=>s+e.resp,0)/entries.length*20) : 0;
+  const avgInter = entries.length ? Math.round(entries.reduce((s,e)=>s+e.inter,0)/entries.length*20) : 0;
+
+  document.getElementById('progressBody').innerHTML = `
+    <div class="prog-summary">
+      <h3 style="font-size:16px;font-weight:800;margin-bottom:12px">🌱 متابعة تطور ${name}</h3>
+      <div class="prog-big">${entries.length} ${entries.length===1?'تسجيل':'تسجيلات'}</div>
+      <div class="prog-bar-w"><div class="prog-bar-f" style="width:${Math.min(entries.length*10,100)}%"></div></div>
+      <div style="font-size:13px;color:rgba(255,255,255,.72);margin-top:8px">تابع التطور أسبوعاً بعد أسبوع</div>
+    </div>
+    ${entries.length?`<div class="card"><h3>📊 متوسط المهارات</h3>
+      <div class="ind-row"><div class="ind-lbl">التواصل البصري</div><div class="ind-track"><div class="ind-fill ${avgEye<33?'low':avgEye<66?'mid':'high'}" style="width:${avgEye}%"></div></div><div class="ind-val">${avgEye}%</div></div>
+      <div class="ind-row"><div class="ind-lbl">الاستجابة</div><div class="ind-track"><div class="ind-fill ${avgResp<33?'low':avgResp<66?'mid':'high'}" style="width:${avgResp}%"></div></div><div class="ind-val">${avgResp}%</div></div>
+      <div class="ind-row"><div class="ind-lbl">التفاعل</div><div class="ind-track"><div class="ind-fill ${avgInter<33?'low':avgInter<66?'mid':'high'}" style="width:${avgInter}%"></div></div><div class="ind-val">${avgInter}%</div></div>
+    </div>`:''}
+    <div class="card">
+      <h3>➕ أضف تحديث هذا الأسبوع</h3>
+      <div class="prog-entry">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">التواصل البصري</label><input class="skill-slider" type="range" min="1" max="5" value="3" id="slEye"></div>
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">الاستجابة</label><input class="skill-slider" type="range" min="1" max="5" value="3" id="slResp"></div>
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">التفاعل</label><input class="skill-slider" type="range" min="1" max="5" value="3" id="slInter"></div>
+        </div>
+        <textarea id="progNote" rows="3" placeholder="اكتب ملاحظة عن هذا الأسبوع... مثال: بدأ يستجيب للاسم أسرع، التواصل البصري تحسّن"></textarea>
+        <button class="btn btn-full btn-teal" style="margin-top:10px" onclick="saveProgressEntry()">💾 حفظ التحديث</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🗓️ السجل الأسبوعي</h3>
+      <div class="timeline">${entriesHtml}</div>
+    </div>
+    <button class="btn btn-full btn-ghost" onclick="showScreen('results')">← العودة للنتيجة</button>`;
+}
+
+function saveProgressEntry(){
+  const entries = JSON.parse(localStorage.getItem('numuw_progress_log')||'[]');
+  const note = document.getElementById('progNote').value.trim();
+  if(!note){showToast('⚠️ اكتب ملاحظة أولاً');return;}
+  const today = new Date().toLocaleDateString('ar-KW',{year:'numeric',month:'long',day:'numeric'});
+  entries.push({
+    date: today,
+    note: note,
+    eye: parseInt(document.getElementById('slEye').value),
+    resp: parseInt(document.getElementById('slResp').value),
+    inter: parseInt(document.getElementById('slInter').value),
+    mood: 'ok'
+  });
+  localStorage.setItem('numuw_progress_log', JSON.stringify(entries));
+  showToast('✅ تم حفظ التحديث!');
+  showRealProgress();
+}
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded',()=>{
+  if(localStorage.getItem('numuw_consent')) showScreen('splash');
+  setLang('ar');
+  try{
+    const saved=localStorage.getItem('numuw_progress');
+    if(saved){const p=JSON.parse(saved);if(p&&p.answers&&Object.keys(p.answers).length>1){if(confirm(L('يوجد تقييم غير مكتمل. هل تريد الاستمرار؟','Incomplete assessment found. Continue?'))){answers=p.answers;currentQ=p.currentQ||0;ageGroup=p.ageGroup||'toddler';showScreen('assessment');renderQ();}else localStorage.removeItem('numuw_progress');}}
+  }catch(e){}
+});
+</script>
+</body>
+</html>
