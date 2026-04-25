@@ -979,7 +979,7 @@ Write a professional, empathetic analytical report including:
 Requirements: empathetic, evidence-based, clear, practical, 200-250 words, mention this is M-CHAT-R/F guidance not diagnosis, no generic AI phrases. Start directly with content.`;
 
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:prompt}]})});
     if(!res.ok)throw new Error(`${res.status}`);
     const data=await res.json();
     return data?.content?.[0]?.text||null;
@@ -1247,9 +1247,9 @@ async function analyzeCameraSession(task, sessionName){
   const taskInstr = (typeof task.instructions==='object'&&!Array.isArray(task.instructions)?task.instructions[lang]:task.instructions).join(', ');
   const childName = answers.name||L('الطفل','the child');
   try{
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
+    const res = await fetch('/.netlify/functions/chat',{
       method:'POST',
-      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514',
         max_tokens:600,
