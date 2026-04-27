@@ -288,7 +288,26 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
 .nav-tab:active{transform:scale(.98)}
 .screen{padding-bottom:76px}
 #privacyGate,#loading{padding-bottom:24px}
-@media(min-width:760px){.bottom-nav{bottom:18px}.nav-tab{font-size:12px}}</style>
+@media(min-width:760px){.bottom-nav{bottom:18px}.nav-tab{font-size:12px}}
+
+/* WINNING EXPERIENCE ADDITIONS */
+.journey-grid{display:grid;gap:10px;margin-top:12px}
+.journey-step{display:grid;grid-template-columns:auto 1fr;gap:12px;background:var(--soft);border:1px solid var(--border);border-radius:14px;padding:13px;align-items:start}
+.journey-num{width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px}
+.journey-step strong{display:block;color:var(--navy);font-size:14px;margin-bottom:3px}
+.journey-step span{display:block;color:var(--muted);font-size:12px;line-height:1.6}
+.decision-map{display:grid;gap:8px;margin-top:12px}
+.decision-row{display:grid;grid-template-columns:110px 1fr;gap:8px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px;font-size:13px;color:var(--text)}
+.decision-tag{font-weight:900;border-radius:999px;padding:6px 10px;text-align:center;color:#fff;font-size:12px}
+.decision-tag.low{background:var(--green)}.decision-tag.medium{background:var(--yellow)}.decision-tag.high{background:var(--red)}
+.doctor-script{background:#f7fbfb;border:1.5px solid var(--border);border-radius:14px;padding:14px;color:var(--text);font-size:14px;line-height:1.85;white-space:pre-wrap}
+.confidence-meter{height:10px;background:var(--border);border-radius:999px;overflow:hidden;margin:10px 0}.confidence-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--green));border-radius:999px}
+.before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.ba-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);border-radius:16px;padding:13px;text-align:right}.ba-box strong{display:block;color:var(--teal);font-size:13px;margin-bottom:7px}.ba-box span{display:block;color:rgba(255,255,255,.72);font-size:12px;line-height:1.7}
+.source-list{display:grid;gap:10px}.source-item{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px}.source-item strong{display:block;color:var(--navy);margin-bottom:5px}.source-item span{font-size:13px;color:var(--muted);line-height:1.7}
+.filter-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px}.filter-chip{border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:8px 12px;font-family:'Tajawal',sans-serif;font-weight:800;color:var(--muted);white-space:nowrap;cursor:pointer}.filter-chip.active{border-color:var(--teal);background:var(--teal-l);color:var(--teal-d)}
+.interest-form{display:grid;gap:10px}.interest-form input,.interest-form select{width:100%;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Tajawal',sans-serif;font-size:14px;color:var(--text);background:#fff}.interest-form input:focus,.interest-form select:focus{outline:none;border-color:var(--teal)}
+@media(max-width:420px){.before-after{grid-template-columns:1fr}.decision-row{grid-template-columns:1fr}.decision-tag{text-align:start}}
+</style>
 </head>
 <body>
 
@@ -345,7 +364,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
     <div class="logo-box"><img src="numoo-main-logo_1.png" alt="شعار نمو"></div>
     <div class="app-title">نمو</div>
     <div class="logo-wordmark">منصة كويتية لدعم أسر أطفال التوحد</div>
-    <div class="app-tagline" id="splashTag">لما تحسين إنك ضايعة، نمو يرتّب لك أول خطوة.</div>
+    <div class="app-tagline" id="splashTag">من لحظة القلق الأولى إلى الخطوة الصحيحة التالية.</div>
     <div class="trust-strip">
       <div class="trust-item">فحص مبكر<br><strong>M-CHAT-R/F</strong></div>
       <div class="trust-item">خطة أسبوعية<br><strong>للبيت</strong></div>
@@ -357,6 +376,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
       <button class="btn btn-outline" onclick="showScreen('workshops')" id="workshopsBtn">ورش نمو</button>
       <button class="btn btn-outline" onclick="showScreen('community')" id="communityBtn">مجتمع نمو</button>
       <button class="btn btn-outline" onclick="showScreen('about')" id="aboutBtn">من نحن</button>
+      <button class="btn btn-outline" onclick="showScreen('sources')" id="sourcesBtn">المصادر</button>
     </div>
     <button class="btn btn-outline" onclick="showScreen('chatbot')" style="border-color:rgba(100,210,210,.5);color:var(--teal)" id="splashBtnChat">اسأل نمو</button>
     <div class="feature-grid">
@@ -364,6 +384,10 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
       <div class="feature-card"><strong>للمختصين</strong><span>تقرير مختصر يساعد على أول نقاش، وليس تشخيصاً.</span></div>
       <div class="feature-card"><strong>للورش</strong><span>مساحة قادمة للتعاون مع العيادات والمراكز الموثوقة.</span></div>
       <div class="feature-card"><strong>للمتابعة</strong><span>سجل أسبوعي بسيط يوضح التحسن خطوة بخطوة.</span></div>
+    </div>
+    <div class="before-after" id="beforeAfterBlock">
+      <div class="ba-box"><strong id="beforeTitle">قبل نمو</strong><span id="beforeText">تشتت في المعلومات، قلق متصاعد، وبحث طويل عن الجهة المناسبة.</span></div>
+      <div class="ba-box"><strong id="afterTitle">بعد نمو</strong><span id="afterText">قراءة توعوية، خطة أسبوعية، وجهات مقترحة يمكن التحقق منها.</span></div>
     </div>
     <div class="mode-toggle" style="max-width:280px;margin:16px auto 0">
       <button class="mode-btn active" id="modeParent" onclick="setMode('parent')">وضع الأهل</button>
@@ -409,7 +433,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
       <div id="disclaimerInfo"><strong>تنبيه طبي:</strong> نمو أداة للفحص التوعوي المبكر وليس تشخيصاً طبياً رسمياً. النتائج استرشادية فقط. التشخيص يتطلب فريقاً متخصصاً مؤهلاً.</div>
     </div>
     <div class="card" style="border:2px solid var(--teal-l);background:var(--teal-xl)">
-      <h3 style="color:var(--teal-d)">🧠 كم مستوى قلقك على طفلك؟</h3>
+      <h3 style="color:var(--teal-d)">🧠 ما مستوى القلق حول نمو الطفل؟</h3>
       <p style="font-size:13px;color:var(--muted);margin-bottom:12px">يساعدنا هذا في تفسير نتائجك بشكل أدق</p>
       <div class="anxiety-scale" id="anxietyScale">
         <div class="anxiety-opt" onclick="setAnxiety(1,this)" title="غير قلق">هادئة</div>
@@ -589,7 +613,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
     <h2 id="progH">متابعة تطور الطفل</h2>
     <p id="progP">تابع رحلة النمو أسبوعاً بعد أسبوع</p>
   </div>
-  <div class="page-body" id="progressBody"><div class="empty-state">اختاري نتيجة الفحص ثم افتحي متابعة التطور، أو أضيفي أول ملاحظة أسبوعية من هنا.</div></div>
+  <div class="page-body" id="progressBody"><div class="empty-state">اختر نتيجة الفحص ثم افتح متابعة التطور، أو أضف أول ملاحظة أسبوعية من هنا.</div></div>
   <div class="copyright">© 2026 نمو — نموذج أولي للمسابقة</div>
 </div>
 <!-- FIXED BOTTOM NAV -->
@@ -603,7 +627,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
     <p id="centP">جهات رسمية ومتخصصة لدعم الأهل وتقييم الأطفال</p>
   </div>
   <div class="page-body">
-    <div class="pada-card">
+    <div class="pada-card" data-tags="government assessment">
       <div style="font-size:32px;flex-shrink:0">🏛️</div>
       <div>
         <h3 id="c0n">الهيئة العامة لشؤون ذوي الإعاقة</h3>
@@ -612,7 +636,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
         <a class="pada-num" href="https://wa.me/96599865721" target="_blank">💬 واتساب</a>
       </div>
     </div>
-    <div class="center-card">
+    <div class="center-card" data-tags="government assessment">
       <div class="ctr-icon">🌟</div>
       <div style="flex:1">
         <div class="ctr-name" id="c1n">مركز الكويت للتوحد</div>
@@ -621,7 +645,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
         <a class="call-link" href="tel:+96525309300">📞 25309300</a>
       </div>
     </div>
-    <div class="center-card">
+    <div class="center-card" data-tags="family guidance">
       <div class="ctr-icon">💙</div>
       <div style="flex:1">
         <div class="ctr-name" id="c2n">جمعية الكويت للتوحد</div>
@@ -630,7 +654,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
         <a class="call-link" href="mailto:ksautism@gmail.com">📧 <span id="c2btn">تواصل</span></a>
       </div>
     </div>
-    <div class="center-card">
+    <div class="center-card" data-tags="private assessment intervention">
       <div class="ctr-icon">🤝</div>
       <div style="flex:1">
         <div class="ctr-name">Autism Partnership Kuwait</div>
@@ -656,10 +680,10 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
   </div>
   <div class="page-body" style="display:flex;flex-direction:column">
     <div class="quick-chips" id="quickChips">
-      <button class="chip" onclick="sendQuickMsg(this.textContent)">شنو علامات التوحد؟</button>
-      <button class="chip" onclick="sendQuickMsg(this.textContent)">متى أروح للطبيب؟</button>
-      <button class="chip" onclick="sendQuickMsg(this.textContent)">كيف أساعد طفلي بالبيت؟</button>
-      <button class="chip" onclick="sendQuickMsg(this.textContent)">شنو M-CHAT-R/F؟</button>
+      <button class="chip" onclick="sendQuickMsg(this.textContent)">ما علامات التوحد؟</button>
+      <button class="chip" onclick="sendQuickMsg(this.textContent)">متى يجب الذهاب إلى الطبيب؟</button>
+      <button class="chip" onclick="sendQuickMsg(this.textContent)">كيف أساعد الطفل في المنزل؟</button>
+      <button class="chip" onclick="sendQuickMsg(this.textContent)">ما هو M-CHAT-R/F؟</button>
       <button class="chip" onclick="sendQuickMsg(this.textContent)">أفضل مراكز الكويت</button>
     </div>
     <div class="chat-messages" id="chatMessages">
@@ -680,7 +704,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
     <p>نمو مشروع كويتي إنساني وتقني، صُمم من احتياج حقيقي سمعناه من الأمهات.</p>
   </div>
   <div class="page-body">
-    <div class="card"><div class="section-kicker">WHY</div><h3>ليش نمو؟</h3><p>كثير من الأسر تبدأ الرحلة بتشتت: معلومات متناقضة، مواعيد طويلة، وخوف من الاستغلال. نمو يحول هذا القلق إلى خطوات واضحة.</p></div>
+    <div class="card"><div class="section-kicker">WHY</div><h3>لماذا نمو؟</h3><p>كثير من الأسر تبدأ الرحلة بتشتت: معلومات متناقضة، مواعيد طويلة، وخوف من الاستغلال. نمو يحول هذا القلق إلى خطوات واضحة.</p></div>
     <div class="card"><div class="section-kicker">HOW</div><h3>كيف نساعد؟</h3><p>نبدأ بفحص مبكر توعوي، ثم نشرح النتيجة بلغة بسيطة، ونقترح خطة أسبوعية، ونربط الأسرة بجهات ومراكز يمكن التحقق منها.</p></div>
     <div class="inline-note"><strong>شفافية مهمة:</strong> نمو ليس جهة طبية ولا يقدم تشخيصاً. هو نموذج أولي يساعد الأسرة على تنظيم رحلتها قبل زيارة المختص.</div>
   </div>
@@ -697,6 +721,15 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
     <div class="card"><h3>ورشة: ماذا أفعل بعد أول مؤشر؟</h3><p>جلسة مباشرة للأهل تشرح الفرق بين القلق الطبيعي والمؤشرات التي تستحق موعداً متخصصاً.</p><span class="source-tag">قيد التنسيق</span></div>
     <div class="card"><h3>ورشة: خطة أسبوعية في البيت</h3><p>تمارين قصيرة للتواصل البصري، الاستجابة للاسم، واللعب المشترك بطريقة آمنة وغير ضاغطة على الطفل.</p><span class="source-tag">مقترحة</span></div>
     <div class="inline-note"><strong>ملاحظة:</strong> التعاون مع عيادة شاين أو أي جهة أخرى يظهر هنا بعد تأكيده رسمياً، حتى تبقى المنصة دقيقة وموثوقة أمام الحكام.</div>
+    <div class="card">
+      <h3 id="interestH">تسجيل الاهتمام بالورش</h3>
+      <p id="interestP">نموذج أولي يوضّح للحكام كيف يمكن قياس الطلب على الورش قبل إطلاقها.</p>
+      <div class="interest-form" id="workshopInterestForm">
+        <input id="interestName" placeholder="الاسم" />
+        <select id="interestTopic"><option>ورشة ماذا أفعل بعد أول مؤشر؟</option><option>خطة أسبوعية في المنزل</option><option>حقوق الطفل والخدمات في الكويت</option></select>
+        <button class="btn btn-full btn-teal" onclick="submitInterest()" id="interestBtn">تسجيل الاهتمام</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -708,17 +741,34 @@ body{font-family:'Tajawal',sans-serif;background:var(--navy);color:#fff;min-heig
     <p>مساحة آمنة لتجارب الأهالي، بإشراف وتوجيه واضحين.</p>
   </div>
   <div class="page-body">
-    <div class="card"><h3>وش سمعنا من الأمهات؟</h3><p>تأخر المواعيد، صعوبة التشخيص في البداية، الخوف من الاستغلال، وتشتت المصادر. هذه الملاحظات هي أساس تصميم نمو.</p></div>
+    <div class="card"><h3>ما الذي سمعناه من الأمهات؟</h3><p>تأخر المواعيد، صعوبة التشخيص في البداية، الخوف من الاستغلال، وتشتت المصادر. هذه الملاحظات هي أساس تصميم نمو.</p></div>
     <div class="card"><h3>قواعد المجتمع</h3><p>لا تشخيص بين الأعضاء، لا ترويج لخدمات غير موثقة، لا مشاركة بيانات الطفل، وتوجيه الحالات الحساسة للمختصين.</p></div>
     <div class="empty-state">نسخة المسابقة تعرض النموذج الأولي للمجتمع. الخطوة التالية: نموذج انضمام، مشرفون، وتصنيف للأسئلة المتكررة.</div>
   </div>
 </div>
+<!-- SOURCES -->
+<div id="sources" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="showScreen('splash')"><span>رجوع</span></button>
+    <h2 id="sourcesH">المصادر العلمية</h2>
+    <p id="sourcesP">مراجع مختصرة توضّح أن نمو أداة توعوية وليست تشخيصاً طبياً.</p>
+  </div>
+  <div class="page-body">
+    <div class="source-list" id="sourcesList">
+      <div class="source-item"><strong>M-CHAT-R/F</strong><span>قائمة الفحص المعدلة للتوحد لدى الأطفال الصغار، وتستخدم للفئة العمرية 16-30 شهراً.</span></div>
+      <div class="source-item"><strong>Robins et al., Pediatrics 2014</strong><span>دراسة تحقق منشورة عن M-CHAT-R/F، PMID: 24366990.</span></div>
+      <div class="source-item"><strong>DSM-5</strong><span>مرجع تشخيصي طبي يستخدمه المختصون، ولا يستبدل بأي فحص رقمي.</span></div>
+      <div class="source-item"><strong>AQ Screening Concepts</strong><span>مفاهيم فرز مبدئية للفئات الأكبر عمراً، وتحتاج دائماً إلى تقييم مختص.</span></div>
+    </div>
+  </div>
+</div>
+
 <!-- WEEKLY GUIDE -->
 <div id="weeklyGuide" class="screen">
   <div class="page-header">
     <button class="back-btn" onclick="showScreen('results')"><span>رجوع</span></button>
     <h2>📅 دليل الأسبوع</h2>
-    <p>أنشطة يومية مخصصة لطفلك — ٥ دقائق كافية</p>
+    <p>أنشطة يومية مخصصة للطفل — خمس دقائق كافية</p>
   </div>
   <div class="page-body" id="weeklyBody"><div class="empty-state">بعد إكمال الفحص، سيظهر هنا دليل أسبوعي مخصص حسب النتيجة. كبداية: اختاري نشاطاً واحداً يومياً وسجلي الملاحظة.</div></div>
 </div>
@@ -759,7 +809,7 @@ const STRINGS = {
     pgConsent:'أقر بأنني اطلعت على سياسة الخصوصية وأوافق على الشروط، وأفهم أن نمو أداة للفحص المبكر وليس تشخيصاً طبياً.',
     pgBtn:'ابدأ التقييم →',
     pgTime:'مدة التقييم: 3-5 دقائق | للأطفال من 16 شهراً حتى 17 سنة',
-    splashTag:'لما تحسين إنك ضايعة، نمو يرتّب لك أول خطوة.',
+    splashTag:'من لحظة القلق الأولى إلى الخطوة الصحيحة التالية.',
     splashBadge1:'✓ مبني على M-CHAT-R/F — المعيار العالمي المعتمد',
     splashBadge2:'🔓 لا يحتاج تسجيل — ابدأ فوراً',
     splashBtn:'ابدأ الفحص',splashBtn2:'🏥 مراكز متخصصة',splashBtn3:'🎥 تمارين ذكية بالكاميرا',
@@ -884,7 +934,7 @@ function updateBottomNav(id){
   const nav=document.getElementById('bottomNav');
   if(!nav) return;
   nav.classList.toggle('hidden', id==='privacyGate'||id==='loading');
-  const group={splash:'splash',info:'ageSelect',ageSelect:'ageSelect',assessment:'ageSelect',results:'ageSelect',progress:'ageSelect',weeklyGuide:'ageSelect',centers:'centers',chatbot:'chatbot',camera:'splash',about:'splash',workshops:'splash',community:'splash'};
+  const group={splash:'splash',info:'ageSelect',ageSelect:'ageSelect',assessment:'ageSelect',results:'ageSelect',progress:'ageSelect',weeklyGuide:'ageSelect',centers:'centers',chatbot:'chatbot',camera:'splash',about:'splash',workshops:'splash',community:'splash',sources:'splash'};
   const active=group[id]||id;
   nav.querySelectorAll('.nav-tab').forEach(btn=>btn.classList.toggle('active', btn.dataset.nav===active));
 }
@@ -896,6 +946,39 @@ function translateBottomNav(){
 }
 
 
+
+function applyWinningLanguage(){
+  const t={
+    ar:{
+      sourcesBtn:'المصادر', beforeTitle:'قبل نمو', beforeText:'تشتت في المعلومات، قلق متصاعد، وبحث طويل عن الجهة المناسبة.',
+      afterTitle:'بعد نمو', afterText:'قراءة توعوية، خطة أسبوعية، وجهات مقترحة يمكن التحقق منها.',
+      sourcesH:'المصادر العلمية', sourcesP:'مراجع مختصرة توضّح أن نمو أداة توعوية وليست تشخيصاً طبياً.',
+      sources:['قائمة الفحص المعدلة للتوحد لدى الأطفال الصغار، وتستخدم للفئة العمرية 16-30 شهراً.','دراسة تحقق منشورة عن M-CHAT-R/F، PMID: 24366990.','مرجع تشخيصي طبي يستخدمه المختصون، ولا يستبدل بأي فحص رقمي.','مفاهيم فرز مبدئية للفئات الأكبر عمراً، وتحتاج دائماً إلى تقييم مختص.'],
+      filters:['الكل','تقييم','حكومي','دعم أهالي','خاص'],
+      interestH:'تسجيل الاهتمام بالورش', interestP:'نموذج أولي يوضّح للحكام كيف يمكن قياس الطلب على الورش قبل إطلاقها.',
+      interestName:'الاسم', interestBtn:'تسجيل الاهتمام',
+      topics:['ورشة ماذا أفعل بعد أول مؤشر؟','خطة أسبوعية في المنزل','حقوق الطفل والخدمات في الكويت']
+    },
+    en:{
+      sourcesBtn:'Sources', beforeTitle:'Before Numoo', beforeText:'Scattered information, rising concern, and a long search for the right support.',
+      afterTitle:'After Numoo', afterText:'An awareness reading, a weekly plan, and suggested entities families can verify.',
+      sourcesH:'Scientific Sources', sourcesP:'Short references showing that Numoo is an awareness tool, not a medical diagnosis.',
+      sources:['Modified Checklist for Autism in Toddlers, used for ages 16-30 months.','Validation study for M-CHAT-R/F, PMID: 24366990.','Medical diagnostic reference used by specialists and never replaced by a digital screen.','Initial screening concepts for older age groups that still require specialist evaluation.'],
+      filters:['All','Assessment','Government','Family Support','Private'],
+      interestH:'Register Workshop Interest', interestP:'A prototype form showing judges how demand for workshops can be measured before launch.',
+      interestName:'Name', interestBtn:'Register Interest',
+      topics:['What should I do after the first sign?','A weekly plan at home','Child rights and services in Kuwait']
+    }
+  }[lang];
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  set('sourcesBtn',t.sourcesBtn); set('beforeTitle',t.beforeTitle); set('beforeText',t.beforeText); set('afterTitle',t.afterTitle); set('afterText',t.afterText);
+  set('sourcesH',t.sourcesH); set('sourcesP',t.sourcesP); set('interestH',t.interestH); set('interestP',t.interestP); set('interestBtn',t.interestBtn);
+  const name=document.getElementById('interestName'); if(name) name.placeholder=t.interestName;
+  document.querySelectorAll('#sourcesList .source-item span').forEach((el,i)=>{if(t.sources[i])el.textContent=t.sources[i];});
+  document.querySelectorAll('#centerFilters .filter-chip').forEach((el,i)=>{if(t.filters[i])el.textContent=t.filters[i];});
+  const topic=document.getElementById('interestTopic'); if(topic) [...topic.options].forEach((op,i)=>{if(t.topics[i])op.textContent=t.topics[i];});
+}
+
 function applyStaticLanguage(){
   const map={
     ar:{
@@ -903,17 +986,17 @@ function applyStaticLanguage(){
       modeHintParent:'وضع الأهل: التقييم مصمم لملاحظة الطفل في البيت، مع تقرير عملي للخطوة التالية.',
       modeHintTeacher:'وضع المعلم: الأسئلة تُقرأ كملاحظات داخل الصف، والنتيجة تُستخدم كنقطة نقاش مع ولي الأمر لا كتقييم طبي.',
       chatbotH:'💬 اسأل نمو', chatbotP:'مساعدك الذكي — اسأل عن التوحد والنمو بالعربي',
-      chips:['شنو علامات التوحد؟','متى أراجع مختص؟','شنو M-CHAT-R/F؟','حقوق ذوي الإعاقة بالكويت'],
+      chips:['ما علامات التوحد؟','متى يجب مراجعة مختص؟','ما هو M-CHAT-R/F؟','حقوق ذوي الإعاقة بالكويت'],
       chatWelcome:'🌱 أهلاً! أنا نمو — مساعدك لكل أسئلتك عن التوحد والنمو. اسأل بالعربي بحرية.',
       chatLimit:'المساعد يقدّم معلومات توعوية ولا يشخّص. في الحالات الطبية العاجلة أو قرارات العلاج، راجعي طبيباً أو مختصاً مؤهلاً.',
       aboutH:'من نحن', aboutP:'نمو مشروع كويتي إنساني وتقني، صُمم من احتياج حقيقي سمعناه من الأمهات.',
-      aboutCards:[['WHY','ليش نمو؟','كثير من الأسر تبدأ الرحلة بتشتت: معلومات متناقضة، مواعيد طويلة، وخوف من الاستغلال. نمو يحول هذا القلق إلى خطوات واضحة.'],['HOW','كيف نساعد؟','نبدأ بفحص مبكر توعوي، ثم نشرح النتيجة بلغة بسيطة، ونقترح خطة أسبوعية، ونربط الأسرة بجهات ومراكز يمكن التحقق منها.'],['TRUST','ليش يثق الحكم بالفكرة؟','المنصة لا تدّعي التشخيص، تذكر حدودها بوضوح، وتبني توصياتها على مراجع فحص مبكر وتجربة مستخدم من احتياج محلي.']],
+      aboutCards:[['WHY','لماذا نمو؟','كثير من الأسر تبدأ الرحلة بتشتت: معلومات متناقضة، مواعيد طويلة، وخوف من الاستغلال. نمو يحول هذا القلق إلى خطوات واضحة.'],['HOW','كيف نساعد؟','نبدأ بفحص مبكر توعوي، ثم نشرح النتيجة بلغة بسيطة، ونقترح خطة أسبوعية، ونربط الأسرة بجهات ومراكز يمكن التحقق منها.'],['TRUST','ليش يثق الحكم بالفكرة؟','المنصة لا تدّعي التشخيص، تذكر حدودها بوضوح، وتبني توصياتها على مراجع فحص مبكر وتجربة مستخدم من احتياج محلي.']],
       workshopsH:'ورش نمو', workshopsP:'مساحة للورش الحية القادمة بالتعاون مع مختصين ومراكز موثوقة.',
       workshopCards:[['ورشة: ماذا أفعل بعد أول مؤشر؟','جلسة مباشرة للأهل تشرح الفرق بين القلق الطبيعي والمؤشرات التي تستحق موعداً متخصصاً.','قيد التنسيق'],['ورشة: خطة أسبوعية في البيت','تمارين قصيرة للتواصل البصري، الاستجابة للاسم، واللعب المشترك بطريقة آمنة وغير ضاغطة على الطفل.','مقترحة'],['تعاون مقترح مع عيادات ومراكز','صفحة تعرض الشركاء، جدول الورش، وطريقة التسجيل فور تأكيد التعاون.','قريباً']],
       communityH:'مجتمع نمو', communityP:'مساحة آمنة لتجارب الأهالي، بإشراف وتوجيه واضحين.',
-      communityCards:[['وش سمعنا من الأمهات؟','تأخر المواعيد، صعوبة التشخيص في البداية، الخوف من الاستغلال، وتشتت المصادر. هذه الملاحظات هي أساس تصميم نمو.'],['قواعد المجتمع','لا تشخيص بين الأعضاء، لا ترويج لخدمات غير موثقة، لا مشاركة بيانات الطفل، وتوجيه الحالات الحساسة للمختصين.']],
+      communityCards:[['ما الذي سمعناه من الأمهات؟','تأخر المواعيد، صعوبة التشخيص في البداية، الخوف من الاستغلال، وتشتت المصادر. هذه الملاحظات هي أساس تصميم نمو.'],['قواعد المجتمع','لا تشخيص بين الأعضاء، لا ترويج لخدمات غير موثقة، لا مشاركة بيانات الطفل، وتوجيه الحالات الحساسة للمختصين.']],
       communityEmpty:'نسخة المسابقة تعرض النموذج الأولي للمجتمع. الخطوة التالية: نموذج انضمام، مشرف تربوي، وسياسة بلاغات واضحة.',
-      weeklyH:'📅 دليل الأسبوع', weeklyP:'أنشطة يومية مخصصة لطفلك — ٥ دقائق كافية', weeklyEmpty:'بعد إكمال الفحص، سيظهر هنا دليل أسبوعي مخصص حسب النتيجة. كبداية: اختاري نشاطاً واحداً يومياً وسجلي الملاحظة.', back:'رجوع', workshopNote:'<strong>ملاحظة:</strong> التعاون مع عيادة شاين أو أي جهة أخرى يظهر هنا بعد تأكيده رسمياً، حتى تبقى المنصة دقيقة وموثوقة أمام الحكام.'
+      weeklyH:'📅 دليل الأسبوع', weeklyP:'أنشطة يومية مخصصة للطفل — خمس دقائق كافية', weeklyEmpty:'بعد إكمال الفحص، سيظهر هنا دليل أسبوعي مخصص حسب النتيجة. كبداية: اختاري نشاطاً واحداً يومياً وسجلي الملاحظة.', back:'رجوع', workshopNote:'<strong>ملاحظة:</strong> التعاون مع عيادة شاين أو أي جهة أخرى يظهر هنا بعد تأكيده رسمياً، حتى تبقى المنصة دقيقة وموثوقة أمام الحكام.'
     },
     en:{
       workshopsBtn:'Workshops', communityBtn:'Numoo Community', aboutBtn:'About', splashBtnChat:'Ask Numoo',
@@ -966,6 +1049,7 @@ function setLang(l){
   });
   applyStaticLanguage();
   translateBottomNav();
+  applyWinningLanguage();
   // Update question database labels if on assessment
   if(document.getElementById('qBody').innerHTML && currentQ>=0){
     renderQ();
@@ -986,7 +1070,7 @@ const QDB = {
     {id:'name_resp',icon:'📢',title:{ar:'الاستجابة للاسم',en:'Name Response'},text:{ar:'هل يستجيب عند مناداته باسمه؟',en:'Does the child respond when called by name?'},sub:{ar:'في بيئة هادئة نسبياً',en:'In a relatively quiet environment'},type:'options',source:'M-CHAT-R/F Item 3',options:{ar:['نعم، يستجيب دائماً','أحياناً','نادراً','لا يستجيب'],en:['Yes, always responds','Sometimes','Rarely','Does not respond']}},
     {id:'pretend',icon:'🎭',title:{ar:'اللعب التخيلي',en:'Pretend Play'},text:{ar:'هل يمارس لعباً تخيلياً؟',en:'Does the child engage in pretend play?'},sub:{ar:'مثل التظاهر بشرب من كوب فارغ',en:'Like pretending to drink from an empty cup'},type:'options',source:'M-CHAT-R/F Item 6',options:{ar:['نعم، يلعب تخيلياً','أحياناً','نادراً','لا يفعل'],en:['Yes, plays pretend','Sometimes','Rarely','Does not']}},
     {id:'repetition',icon:'🔄',title:{ar:'الحركات المتكررة',en:'Repetitive Movements'},text:{ar:'هل يكرر حركات جسدية بشكل لافت؟',en:'Does the child repeat body movements noticeably?'},sub:{ar:'مثل هز الجسم أو رفرفة اليدين',en:'Like rocking body or flapping hands'},type:'options',source:'DSM-5 Criterion B1',options:{ar:['لا، نادراً جداً','أحياناً بشكل بسيط','كثيراً ويصعب إيقافه','دائماً وبشكل مكثف'],en:['No, very rarely','Sometimes, mildly','Often, hard to stop','Always, intensely']}},
-    {id:'concern',icon:'💭',title:{ar:'انطباع الأهل',en:'Parent Concern'},text:{ar:'ما مستوى قلقك على تطور طفلك؟',en:"How concerned are you about the child's development?"},sub:{ar:'انطباع الأهل مؤشر تشخيصي معتمد',en:'Parental impression is a validated diagnostic indicator'},type:'options',source:'M-CHAT-R/F Parental Concern',options:{ar:['لا قلق على الإطلاق','بعض التساؤلات','قلق واضح','قلق شديد وأحتاج مساعدة فورية'],en:['No concern at all','Some questions','Clear concern','Very concerned, need help now']}}
+    {id:'concern',icon:'💭',title:{ar:'انطباع الأهل',en:'Parent Concern'},text:{ar:'ما مستوى قلقك على تطور الطفل؟',en:"How concerned are you about the child's development?"},sub:{ar:'انطباع الأهل مؤشر تشخيصي معتمد',en:'Parental impression is a validated diagnostic indicator'},type:'options',source:'M-CHAT-R/F Parental Concern',options:{ar:['لا قلق على الإطلاق','بعض التساؤلات','قلق واضح','قلق شديد وأحتاج مساعدة فورية'],en:['No concern at all','Some questions','Clear concern','Very concerned, need help now']}}
   ],
   preschool:[
     {id:'name',icon:'👶',title:{ar:'اسم الطفل',en:"Child's Name"},text:{ar:'ما اسم الطفل؟',en:"Child's name?"},sub:{ar:'لتخصيص التقرير',en:'To personalize'},type:'text',placeholder:{ar:'مثال: فهد، نورة',en:'e.g. Fahad, Nora'}},
@@ -1163,7 +1247,7 @@ function buildLocalReport(risk,name,group){
   if(lang==='en'){
     return `Summary\nNumoo calculated a ${riskText} follow-up level for ${name}. This is a guidance report based on screening answers, not a medical diagnosis.\n\nIndicators worth attention\n${concernLines}\n\nStrengths\n${strengthLines}\n\nRecommended next step\n${nextSteps}\n\nWarm note\nYou are not late; organizing the next step is already meaningful progress.`;
   }
-  return `الملخص\nحسب إجاباتك، مستوى المتابعة المقترح لـ ${name} هو: ${riskText}. هذا تقرير توعوي مبني على الفحص الرقمي، وليس تشخيصاً طبياً.\n\nمؤشرات تستحق الانتباه\n${concernLines}\n\nنقاط مطمئنة\n${strengthLines}\n\nالخطوة المقترحة\n${nextSteps}\n\nرسالة أخيرة\nأنتِ لستِ متأخرة؛ ترتيب الخطوة القادمة بحد ذاته بداية قوية لطفلك.`;
+  return `الملخص\nحسب إجاباتك، مستوى المتابعة المقترح لـ ${name} هو: ${riskText}. هذا تقرير توعوي مبني على الفحص الرقمي، وليس تشخيصاً طبياً.\n\nمؤشرات تستحق الانتباه\n${concernLines}\n\nنقاط مطمئنة\n${strengthLines}\n\nالخطوة المقترحة\n${nextSteps}\n\nرسالة أخيرة\nأنتِ لستِ متأخرة؛ ترتيب الخطوة القادمة بحد ذاته بداية قوية لالطفل.`;
 }
 // ── LOCAL SMART REPORT ──
 async function getAIReport(risk,name,group){
@@ -1179,6 +1263,63 @@ async function runAnalysis(){
   aiReport=(await aiPromise)||buildLocalReport(risk,name,ageGroup);
   try{localStorage.removeItem('numuw_progress');sessionStorage.removeItem('numuw_progress');}catch(e){}
   showResults(risk,name);
+}
+
+
+function buildJourneyPlan(risk,name){
+  const plans={
+    low:[
+      ['اليوم','احتفظ بالتقرير وراجع المؤشرات المطمئنة.','Today','Save the report and review the reassuring indicators.'],
+      ['هذا الأسبوع','طبقي نشاطاً يومياً قصيراً للتواصل واللعب المشترك.','This week','Apply one short daily activity for communication and shared play.'],
+      ['خلال شهر','راجع النمو دورياً مع طبيب الأطفال إذا ظهرت مؤشرات جديدة.','Within a month','Review development with the pediatrician if new concerns appear.']
+    ],
+    medium:[
+      ['اليوم','اقرأ المؤشرات التي تحتاج إلى متابعة وجهّز أمثلة من المنزل.','Today','Read the indicators that need follow-up and prepare home examples.'],
+      ['هذا الأسبوع','ابدأ دليل الأسبوع وسجّل الملاحظات يومياً.','This week','Start the weekly guide and record daily observations.'],
+      ['خلال أسبوعين','احجزي موعداً مع مختص نمو أو تخاطب لمناقشة النتيجة.','Within two weeks','Book a developmental or speech specialist visit to discuss the result.']
+    ],
+    high:[
+      ['اليوم','اطبعي التقرير واحتفظي بمقاطع قصيرة توضح السلوكيات اللافتة.','Today','Print the report and keep short clips showing notable behaviors.'],
+      ['هذا الأسبوع','تواصلي مع مركز متخصص أو جهة رسمية لطلب تقييم شامل.','This week','Contact a specialist center or official entity for a comprehensive evaluation.'],
+      ['بعد الموعد','حوّلي التوصيات إلى خطة تدخل مبكر ومتابعة أسبوعية.','After the visit','Turn recommendations into an early-intervention and weekly follow-up plan.']
+    ]
+  };
+  const items=plans[risk]||plans.medium;
+  return '<div class="card"><h3>'+L('خطة الرحلة التالية','Next-Step Journey')+'</h3><div class="journey-grid">'+items.map((it,i)=>'<div class="journey-step"><div class="journey-num">'+(i+1)+'</div><div><strong>'+L(it[0],it[2])+'</strong><span>'+L(it[1],it[3])+'</span></div></div>').join('')+'</div></div>';
+}
+function buildDecisionMap(){
+  return '<div class="card"><h3>'+L('خريطة القرار','Decision Map')+'</h3><div class="decision-map">'+
+    '<div class="decision-row"><span class="decision-tag low">'+L('منخفض','Low')+'</span><span>'+L('متابعة منزلية ومراجعة دورية للنمو.','Home monitoring and routine developmental review.')+'</span></div>'+
+    '<div class="decision-row"><span class="decision-tag medium">'+L('متوسط','Medium')+'</span><span>'+L('تطبيق خطة أسبوعية وحجز موعد خلال أسبوعين.','Apply the weekly plan and book a visit within two weeks.')+'</span></div>'+
+    '<div class="decision-row"><span class="decision-tag high">'+L('مرتفع','High')+'</span><span>'+L('تقييم متخصص قريب مع تقرير مختصر وملاحظات موثقة.','Prompt specialist evaluation with a concise report and documented observations.')+'</span></div>'+
+  '</div></div>';
+}
+function buildDoctorScript(risk,name){
+  const qs=QDB[ageGroup]||[];
+  const flagged=qs.filter(q=>q.type==='options'&&answers[q.id]!==undefined&&((RW[q.id]?.[answers[q.id]]||0)>=2)).slice(0,4).map(q=>typeof q.title==='object'?q.title[lang]:q.title);
+  const ar='أرغب في مناقشة نتيجة فحص نمو لطفلي '+name+'. ظهرت مؤشرات تستحق المتابعة في: '+(flagged.join('، ')||'بعض جوانب التواصل والسلوك')+'. أود معرفة ما إذا كان يحتاج إلى تقييم نمو شامل أو إحالة إلى أخصائي تخاطب/سلوك.';
+  const en='I would like to discuss Numoo screening results for '+name+'. Follow-up indicators appeared in: '+(flagged.join(', ')||'some communication and behavior areas')+'. I would like to know whether a full developmental evaluation or referral to a speech/behavior specialist is recommended.';
+  return '<div class="card"><h3>'+L('ماذا أقول للطبيب؟','What Should I Tell the Doctor?')+'</h3><div class="doctor-script">'+escapeHTML(L(ar,en))+'</div><button class="btn btn-outline" style="margin-top:12px" onclick="copyDoctorScript()">'+L('نسخ النص','Copy Text')+'</button></div>';
+}
+function buildConfidenceBox(){
+  const total=(QDB[ageGroup]||[]).filter(q=>q.type==='options').length;
+  const answered=(QDB[ageGroup]||[]).filter(q=>q.type==='options'&&answers[q.id]!==undefined).length;
+  const pct=total?Math.round(answered/total*100):0;
+  return '<div class="card"><h3>'+L('مؤشر اكتمال القراءة','Reading Completeness')+'</h3><div class="confidence-meter"><div class="confidence-fill" style="width:'+pct+'%"></div></div><p>'+L('اكتملت الإجابات بنسبة ','Answers completed: ')+pct+'%'+L('؛ لذلك يمكن استخدام التقرير كنقطة بداية منظمة للحوار مع المختص.','; the report can be used as an organized starting point for discussion with a specialist.')+'</p></div>';
+}
+function copyDoctorScript(){
+  const text=document.querySelector('.doctor-script')?.textContent||'';
+  navigator.clipboard?.writeText(text);
+  showToast(L('تم نسخ النص للطبيب','Doctor note copied'));
+}
+function filterCenters(tag,btn){
+  document.querySelectorAll('#centerFilters .filter-chip').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.querySelectorAll('#centers [data-tags]').forEach(card=>{card.style.display=(tag==='all'||(card.dataset.tags||'').includes(tag))?'flex':'none';});
+}
+function submitInterest(){
+  const name=document.getElementById('interestName')?.value?.trim();
+  showToast(name?L('تم تسجيل الاهتمام في النموذج الأولي','Interest recorded in the prototype'):L('تم تسجيل الاهتمام في النموذج الأولي','Interest recorded in the prototype'));
 }
 
 // ── RESULTS ──
@@ -1246,6 +1387,10 @@ function showResults(risk,name){
     ${hmData.length?`<div class="card"><h3>🗺️ ${L('خريطة المهارات','Skills Heatmap')}</h3><p style="font-size:12px;color:var(--muted);margin-bottom:12px">${L('نظرة سريعة على مجالات النمو','Quick overview of developmental areas')}</p><div class="heatmap-grid">${hmHtml}</div></div>`:''}
     ${indsHtml?`<div class="card"><h3>📊 ${L('المؤشرات التفصيلية','Detailed Indicators')}</h3>${indsHtml}</div>`:''}
     ${aiSec}
+    ${buildConfidenceBox()}
+    ${buildJourneyPlan(risk,name)}
+    ${buildDecisionMap()}
+    ${buildDoctorScript(risk,name)}
     ${concerns.length?`<div class="card"><h3>🔍 ${L('المؤشرات التي تستحق الانتباه','Indicators Worth Attention')}</h3>${concerns.slice(0,4).map(i=>`<div class="q-detail concern"><h4>⚠️ ${i.title}: ${i.ans}</h4><p>${i.note} ${i.src?`<em>(${i.src})</em>`:''}</p></div>`).join('')}</div>`:''}
     ${positives.length?`<div class="card"><h3>💪 ${L('نقاط القوة','Strengths')}</h3>${positives.slice(0,3).map(i=>`<div class="q-detail ok"><h4>✅ ${i.title}: ${i.ans}</h4><p>${L('استجابة إيجابية — مؤشر مطمئن','Positive response — reassuring indicator')}</p></div>`).join('')}</div>`:''}
     <div class="card"><h3>🏥 ${L('خطة العمل','Action Plan')}</h3>${phasesHtml}</div>
@@ -1554,11 +1699,11 @@ let chatHistory = [];
 const FAQ = [
   {
     keys:['علامات','أعراض','مؤشر','كيف أعرف','شنو علامات'],
-    q:'شنو علامات التوحد؟',
+    q:'ما علامات التوحد؟',
     a:`علامات التوحد تختلف حسب العمر، لكن أبرزها:
 
-👁️ <b>التواصل البصري:</b> ما ينظر بعيونك لما تكلمه
-👋 <b>الاستجابة للاسم:</b> ما يرد لما تناديه بعد ١٢ شهر
+👁️ <b>التواصل البصري:</b> لا ينظر في العينين عند الحديث معه
+👋 <b>الاستجابة للاسم:</b> لا يستجيب عند مناداته بعد عمر 12 شهراً
 👆 <b>الإشارة:</b> ما يشير لأشياء يبي يريك إياها
 🗣️ <b>اللغة:</b> تأخر في الكلام أو فقدان كلمات كان يقولها
 🔄 <b>الحركات المتكررة:</b> مثل ترديد حركة أو صوت بشكل متكرر
@@ -1567,12 +1712,12 @@ const FAQ = [
   },
   {
     keys:['متى','طبيب','أروح','متخصص','موعد','أحجز'],
-    q:'متى أروح للطبيب؟',
+    q:'متى يجب الذهاب إلى الطبيب؟',
     a:`روح للطبيب أو متخصص فوراً إذا لاحظت:
 
 🔴 ما يقول أي كلمة بعمر ١٦ شهر
 🔴 ما يقول كلمتين مع بعض بعمر ٢٤ شهر
-🔴 فقد كلمات كان يقولها قبل
+🔴 فقد كلمات كان يستخدمها سابقاً
 🔴 ما يستجيب لاسمه بشكل مستمر
 🔴 نتيجة نمو جاءت "مرتفعة"
 
@@ -1583,7 +1728,7 @@ const FAQ = [
   },
   {
     keys:['بالبيت','أساعد','نشاط','تمرين','أسوي','أعمل'],
-    q:'كيف أساعد طفلي بالبيت؟',
+    q:'كيف أساعد الطفل في المنزل؟',
     a:`٥ أشياء تقدر تسويها اليوم:
 
 👁️ <b>التواصل البصري:</b> اجلس على مستوى عينيه وابتسم — ٥ دقائق يومياً
@@ -1596,7 +1741,7 @@ const FAQ = [
   },
   {
     keys:['M-CHAT','mchat','ام شات','أداة','اختبار','فحص','معيار'],
-    q:'شنو M-CHAT-R/F؟',
+    q:'ما هو M-CHAT-R/F؟',
     a:`M-CHAT-R/F هي <b>قائمة الفحص المعدّلة للتوحد</b> — الأداة الأكثر استخداماً عالمياً للكشف المبكر.
 
 📊 <b>الأرقام:</b>
@@ -1690,7 +1835,7 @@ const FAQ = [
   },
   {
     keys:['قلق','خايف','خوف','مو عارف','ماذا أفعل','وش أسوي'],
-    q:'أنا قلقان على طفلي، شنو أسوي؟',
+    q:'أنا قلق بشأن الطفل، ماذا أفعل؟',
     a:`قلقك طبيعي وهو دليل على اهتمامك 💙
 
 <b>خطوات واضحة الحين:</b>
@@ -1700,7 +1845,7 @@ const FAQ = [
 3️⃣ <b>تكلم مع طبيب الأسرة</b> — وضح قلقك وأرجع للتقرير
 4️⃣ <b>لو النتيجة مرتفعة</b> — اتصل بمركز الكويت للتوحد: 25309300
 
-💡 تذكر: التدخل المبكر يصنع فرقاً كبيراً. القلق + الحركة = أفضل هدية لطفلك.`
+💡 تذكر: التدخل المبكر يصنع فرقاً كبيراً. القلق + الحركة = أفضل هدية لالطفل.`
   }
 ];
 
@@ -1733,7 +1878,7 @@ function findAnswer(msg){
 • <b>مراكز الكويت</b> — اكتب "مراكز"
 • <b>الفرق بين التأخر والتوحد</b> — اكتب "فرق"
 
-أو يمكنك <b>إكمال تقييم نمو</b> للحصول على تقرير مخصص لطفلك! 🌱`;
+أو يمكنك <b>إكمال تقييم نمو</b> للحصول على تقرير مخصص لالطفل! 🌱`;
 }
 
 function sendQuickMsg(text){
@@ -1792,7 +1937,7 @@ async function sendChatMsg(){
 // ══════════════════════════════
 function showWeeklyGuide(){
   const risk = calcRisk();
-  const name = answers.name || 'طفلك';
+  const name = answers.name || 'الطفل';
   const savedDays = JSON.parse(localStorage.getItem('numuw_weekdays')||'{}');
 
   const actsByRisk = {
@@ -1839,7 +1984,7 @@ function showWeeklyGuide(){
     <div class="week-activity">${daysHtml}</div>
     <div class="card" style="background:var(--teal-xl);border:1px solid var(--teal-l)">
       <h3 style="color:var(--teal-d)">💡 نصيحة الأسبوع</h3>
-      <p style="font-size:13px;color:var(--muted)">${risk==='high'?'التدخل المبكر يصنع الفرق. كل يوم تمارس فيه النشاط هو استثمار في مستقبل طفلك.':risk==='medium'?'الانتظام هو المفتاح — ٥ دقائق يومياً أفضل من ساعة مرة بالأسبوع.':'طفلك يتطور بشكل طبيعي. استمر بالتحفيز والدعم الإيجابي.'}</p>
+      <p style="font-size:13px;color:var(--muted)">${risk==='high'?'التدخل المبكر يصنع الفرق. كل يوم تمارس فيه النشاط هو استثمار في مستقبل الطفل.':risk==='medium'?'الانتظام هو المفتاح — ٥ دقائق يومياً أفضل من ساعة مرة بالأسبوع.':'الطفل يتطور بشكل طبيعي. استمر بالتحفيز والدعم الإيجابي.'}</p>
     </div>
     <button class="btn btn-full btn-ghost" onclick="showScreen('results')">← العودة للنتيجة</button>`;
 
