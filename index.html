@@ -2194,8 +2194,8 @@ async function sendChatMsg(){
     msgs.scrollTop = msgs.scrollHeight;
   } catch(e){
     const reply = L(
-      'خدمة الذكاء الاصطناعي السحابية غير متاحة الآن. هذه المحادثة لا تستخدم FAQ كبديل؛ انشري المشروع على Netlify واضبطي OPENAI_API_KEY أو GEMINI_API_KEY، ثم افتحي رابط الموقع السحابي أو خزّني رابط الدالة في numoo_cloud_ai_endpoint.',
-      'The cloud AI service is unavailable right now. This chat does not use an FAQ fallback; deploy to Netlify and set OPENAI_API_KEY or GEMINI_API_KEY, then open the cloud site URL or store the function URL in numoo_cloud_ai_endpoint.'
+      'خدمة الذكاء الاصطناعي السحابية غير متاحة الآن. هذه المحادثة لا تستخدم FAQ كبديل. التفاصيل: ' + (e.message || 'تحققي من مفتاح Netlify وإعادة النشر.'),
+      'The cloud AI service is unavailable right now. This chat does not use an FAQ fallback. Details: ' + (e.message || 'Check the Netlify key and redeploy.')
     );
     chatHistory.push({role:'assistant', content: reply});
     const tb = document.getElementById('typingBubble');
